@@ -5,42 +5,43 @@
 
 ## Engine & Language
 
-- **Engine**: [TO BE CONFIGURED — run /setup-engine]
-- **Language**: [TO BE CONFIGURED]
-- **Rendering**: [TO BE CONFIGURED]
-- **Physics**: [TO BE CONFIGURED]
+- **Engine**: Godot 4.6
+- **Language**: GDScript (primary), C++ via GDExtension (performance-critical systems only)
+- **Rendering**: Compatibility renderer (mobile-optimized for Android/iOS targets)
+- **Physics**: Jolt (Godot 4.6 default)
 
 ## Naming Conventions
 
-- **Classes**: [TO BE CONFIGURED]
-- **Variables**: [TO BE CONFIGURED]
-- **Signals/Events**: [TO BE CONFIGURED]
-- **Files**: [TO BE CONFIGURED]
-- **Scenes/Prefabs**: [TO BE CONFIGURED]
-- **Constants**: [TO BE CONFIGURED]
+- **Classes**: PascalCase — e.g., `OrganRepairSystem`
+- **Variables/Functions**: snake_case — e.g., `move_speed`, `repair_organ()`
+- **Signals**: snake_case past tense — e.g., `organ_repaired`, `simulation_failed`
+- **Files**: snake_case matching class — e.g., `organ_repair_system.gd`
+- **Scenes**: PascalCase matching root node — e.g., `OrganRepairSystem.tscn`
+- **Constants**: UPPER_SNAKE_CASE — e.g., `MAX_ORGANS`, `RUN_DURATION`
 
 ## Performance Budgets
 
-- **Target Framerate**: [TO BE CONFIGURED]
-- **Frame Budget**: [TO BE CONFIGURED]
-- **Draw Calls**: [TO BE CONFIGURED]
-- **Memory Ceiling**: [TO BE CONFIGURED]
+- **Target Framerate**: 60 fps (mobile minimum: 30 fps)
+- **Frame Budget**: 16.6ms (33ms at 30fps floor)
+- **Draw Calls**: [TO BE CONFIGURED — set after first profiling pass]
+- **Memory Ceiling**: [TO BE CONFIGURED — set after first profiling pass]
 
 ## Testing
 
-- **Framework**: [TO BE CONFIGURED]
+- **Framework**: GUT (Godot Unit Testing)
 - **Minimum Coverage**: [TO BE CONFIGURED]
-- **Required Tests**: Balance formulas, gameplay systems, networking (if applicable)
+- **Required Tests**: Simulation determinism (same input → same output always), organ rule validation, puzzle solution uniqueness
 
 ## Forbidden Patterns
 
 <!-- Add patterns that should never appear in this project's codebase -->
-- [None configured yet — add as architectural decisions are made]
+- No hardcoded gameplay values — all tuning knobs must be exported variables or data files
+- No singletons for gameplay state — use dependency injection or explicit passing
 
 ## Allowed Libraries / Addons
 
 <!-- Add approved third-party dependencies here -->
-- [None configured yet — add as dependencies are approved]
+- GUT (Godot Unit Testing) — testing framework
 
 ## Architecture Decisions Log
 
