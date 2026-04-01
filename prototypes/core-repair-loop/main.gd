@@ -198,7 +198,7 @@ func _make_inventory_panel(organ_id: String, sz: Vector2) -> Panel:
 	panel.size = sz
 	panel.name = "Inv_" + organ_id
 
-	var data := ORGANS[organ_id]
+	var data: Dictionary = ORGANS[organ_id]
 
 	var swatch := ColorRect.new()
 	swatch.color    = data.color
@@ -240,7 +240,7 @@ func _refresh_slots() -> void:
 	for i in range(slot_panels.size()):
 		var panel    := slot_panels[i] as Panel
 		var organ_id : String = current_config[i]
-		var data     := ORGANS[organ_id]
+		var data: Dictionary = ORGANS[organ_id]
 		var is_sel   := (selected_slot == i)
 
 		panel.get_node("Swatch").color            = data.color
