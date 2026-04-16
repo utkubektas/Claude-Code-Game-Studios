@@ -20,7 +20,7 @@ Specimen is a mobile logic puzzle game built around a single core loop: examine 
 | 1 | Organ Type Registry | Core | MVP | Designed | design/gdd/organ-type-registry.md | — |
 | 2 | Creature Definition System | Core | MVP | Designed | design/gdd/creature-definition-system.md | — |
 | 3 | Biology Rule Engine | Gameplay | MVP | Designed | design/gdd/biology-rule-engine.md | Organ Type Registry |
-| 4 | Failure Cascade System | Gameplay | MVP | Not Started | — | Biology Rule Engine, Organ Type Registry |
+| 4 | Failure Cascade System | Gameplay | MVP | Designed | design/gdd/failure-cascade-system.md | Biology Rule Engine, Organ Type Registry |
 | 5 | Puzzle Data System | Core | MVP | Not Started | — | Organ Type Registry, Creature Definition System |
 | 6 | Touch Input Handler | Core | MVP | Not Started | — | — |
 | 7 | Specimen Viewer | Gameplay | MVP | Not Started | — | Creature Definition System |
@@ -160,7 +160,7 @@ None detected. The dependency graph is a clean DAG (directed acyclic graph).
 | Design docs started | 0 |
 | Design docs reviewed | 0 |
 | Design docs approved | 0 |
-| MVP systems designed | 3 / 13 |
+| MVP systems designed | 4 / 13 |
 | V1 systems designed | 0 / 6 |
 | Full Vision systems designed | 0 / 2 |
 
