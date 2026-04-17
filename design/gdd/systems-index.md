@@ -24,12 +24,12 @@ Specimen is a mobile logic puzzle game built around a single core loop: examine 
 | 5 | Puzzle Data System | Core | MVP | Designed | design/gdd/puzzle-data-system.md | Organ Type Registry, Creature Definition System |
 | 6 | Touch Input Handler | Core | MVP | Designed | design/gdd/touch-input-handler.md | — |
 | 7 | Specimen Viewer | Gameplay | MVP | Designed | design/gdd/specimen-viewer.md | Creature Definition System |
-| 8 | Organ Repair Mechanic | Gameplay | MVP | Not Started | — | Touch Input Handler, Puzzle Data System, Specimen Viewer |
-| 9 | Run Simulation Controller | Gameplay | MVP | Not Started | — | Biology Rule Engine, Failure Cascade System, Puzzle Data System |
-| 10 | Run Sequence VFX | UI | MVP | Not Started | — | Run Simulation Controller |
-| 11 | Puzzle HUD | UI | MVP | Not Started | — | Organ Repair Mechanic, Run Simulation Controller, Puzzle Data System |
-| 12 | Screen Navigation | UI | MVP | Not Started | — | — |
-| 13 | Save/Load System | Persistence | MVP | Not Started | — | — |
+| 8 | Organ Repair Mechanic | Gameplay | MVP | Designed | design/gdd/organ-repair-mechanic.md | Touch Input Handler, Puzzle Data System, Specimen Viewer |
+| 9 | Run Simulation Controller | Gameplay | MVP | Designed | design/gdd/run-simulation-controller.md | Biology Rule Engine, Failure Cascade System, Puzzle Data System |
+| 10 | Run Sequence VFX | UI | MVP | Designed | design/gdd/run-sequence-vfx.md | Run Simulation Controller |
+| 11 | Puzzle HUD | UI | MVP | Designed | design/gdd/puzzle-hud.md | Organ Repair Mechanic, Run Simulation Controller, Puzzle Data System |
+| 12 | Screen Navigation | UI | MVP | Designed | design/gdd/screen-navigation.md | — |
+| 13 | Save/Load System | Persistence | MVP | Designed | design/gdd/save-load-system.md | — |
 | 14 | Rule Discovery System (inferred) | Gameplay | V1 | Not Started | — | Biology Rule Engine, Run Simulation Controller |
 | 15 | Discovery Journal | Progression | V1 | Not Started | — | Rule Discovery System, Save/Load System |
 | 16 | Discovery Journal UI (inferred) | UI | V1 | Not Started | — | Discovery Journal |
@@ -160,7 +160,7 @@ None detected. The dependency graph is a clean DAG (directed acyclic graph).
 | Design docs started | 0 |
 | Design docs reviewed | 0 |
 | Design docs approved | 0 |
-| MVP systems designed | 7 / 13 |
+| MVP systems designed | 13 / 13 |
 | V1 systems designed | 0 / 6 |
 | Full Vision systems designed | 0 / 2 |
 
