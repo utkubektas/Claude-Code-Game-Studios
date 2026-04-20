@@ -1,6 +1,12 @@
 class_name OrganTypeResource
 extends Resource
 
+## Biyoloji kanalı tipi — OrganTypeResource ve SlotChannel tarafından paylaşılır.
+enum FlowType {
+	PULSE,  ## Biyoelektrik sinyal kanalı
+	FLUID,  ## Organik sıvı akış kanalı
+}
+
 ## Organ rolü — Biology Rule Engine bu enum üzerinden kural uygular.
 ## Sprint 02'de connection_slots (SlotDefinition) bu enum'u tamamlar.
 enum Role {

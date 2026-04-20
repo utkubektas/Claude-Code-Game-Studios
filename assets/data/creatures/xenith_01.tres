@@ -1,0 +1,63 @@
+[gd_resource type="Resource" load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://src/systems/creature_type_resource.gd" id="1"]
+[ext_resource type="Script" path="res://src/systems/organ_slot_definition.gd" id="2"]
+[ext_resource type="Script" path="res://src/systems/slot_channel.gd" id="3"]
+
+[sub_resource type="Resource" id="slot_0"]
+script = ExtResource("2")
+slot_index = 0
+world_position = Vector2(-80, -70)
+accepted_organ_type_ids = Array[String]([])
+
+[sub_resource type="Resource" id="slot_1"]
+script = ExtResource("2")
+slot_index = 1
+world_position = Vector2(80, -70)
+accepted_organ_type_ids = Array[String]([])
+
+[sub_resource type="Resource" id="slot_2"]
+script = ExtResource("2")
+slot_index = 2
+world_position = Vector2(-80, 70)
+accepted_organ_type_ids = Array[String]([])
+
+[sub_resource type="Resource" id="slot_3"]
+script = ExtResource("2")
+slot_index = 3
+world_position = Vector2(0, 90)
+accepted_organ_type_ids = Array[String]([])
+
+[sub_resource type="Resource" id="channel_0"]
+script = ExtResource("3")
+from_slot_index = 0
+to_slot_index = 1
+flow_type = 0
+
+[sub_resource type="Resource" id="channel_1"]
+script = ExtResource("3")
+from_slot_index = 1
+to_slot_index = 2
+flow_type = 0
+
+[sub_resource type="Resource" id="channel_2"]
+script = ExtResource("3")
+from_slot_index = 0
+to_slot_index = 2
+flow_type = 1
+
+[sub_resource type="Resource" id="channel_3"]
+script = ExtResource("3")
+from_slot_index = 2
+to_slot_index = 3
+flow_type = 1
+
+[resource]
+script = ExtResource("1")
+creature_id = "xenith_01"
+display_name = "Xenith"
+lore_hint = "A bioluminescent specimen recovered from containment bay 04. Organ configuration consistent with class-III signal emitters."
+organ_slots = [SubResource("slot_0"), SubResource("slot_1"), SubResource("slot_2"), SubResource("slot_3")]
+slot_channels = [SubResource("channel_0"), SubResource("channel_1"), SubResource("channel_2"), SubResource("channel_3")]
+healthy_configuration = Array[String](["vordex", "valdris", "thrennic", "ossuric"])
+unlock_condition = "start"
