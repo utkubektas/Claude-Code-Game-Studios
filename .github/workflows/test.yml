@@ -1,0 +1,53 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - main
+      - claude/**
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache Godot binary
+        id: cache-godot
+        uses: actions/cache@v4
+        with:
+          path: ~/godot-bin
+          key: godot-4.6.1-${{ runner.os }}
+
+      - name: Download Godot 4.6.1
+        if: steps.cache-godot.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p ~/godot-bin
+          cd ~/godot-bin
+          curl -L -o godot.zip "https://github.com/godotengine/godot-builds/releases/download/4.6.1-stable/Godot_v4.6.1-stable_linux.x86_64.zip"
+          unzip -q godot.zip
+          rm godot.zip
+          chmod +x Godot_v4.6.1-stable_linux.x86_64/Godot_v4.6.1-stable_linux.x86_64
+
+      - name: Import project
+        run: |
+          ~/godot-bin/Godot_v4.6.1-stable_linux.x86_64/Godot_v4.6.1-stable_linux.x86_64 \
+            --headless \
+            --import \
+            -q
+
+      - name: Run GUT tests
+        run: |
+          ~/godot-bin/Godot_v4.6.1-stable_linux.x86_64/Godot_v4.6.1-stable_linux.x86_64 \
+            --headless \
+            -s res://addons/gut/gut_cmdln.gd \
+            -- -gdir=res://tests/unit -gprefix=test_ -gsuffix=.gd -glog=0
+          EXIT_CODE=$?
+          if [ $EXIT_CODE -ne 0 ]; then
+            echo "Tests failed with exit code $EXIT_CODE"
+            exit $EXIT_CODE
+          fi

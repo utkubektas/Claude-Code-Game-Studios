@@ -1,0 +1,12 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/systems/puzzle_resource.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+puzzle_index = 2
+display_title = "Specimen 01-B"
+creature_type_id = "xenith_01"
+starting_configuration = Array[String](["vordex", "thrennic", "thrennic", "ossuric"])
+hint_slot_index = -1
+unlock_after_index = 1
