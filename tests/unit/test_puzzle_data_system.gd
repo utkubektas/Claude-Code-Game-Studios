@@ -452,3 +452,63 @@ func test_puzzle_resource_count_differences_returns_zero_when_identical() -> voi
 
 	# Assert
 	assert_eq(diff, 0)
+
+
+# ---------------------------------------------------------------------------
+# PuzzleDataSystem — mark_solved, increment_attempts (T10)
+# ---------------------------------------------------------------------------
+
+func test_puzzle_data_system_mark_solved_sets_is_solved_on_active_instance() -> void:
+	# Arrange — tam eşleşen konfigürasyonla instance oluştur
+	var pr := _make_valid_puzzle_resource()
+	var reg := _make_registry()
+	var inst := _make_instance(pr, reg, ["vordex", "valdris", "thrennic", "ossuric"])
+	inst.set_organ(0, "vordex")  # starting config'deki ossuric → vordex (healthy ile eşleş)
+	var pds := PuzzleDataSystem.new()
+	pds.active_instance = inst
+
+	# Act
+	pds.mark_solved()
+
+	# Assert
+	assert_true(inst.is_solved)
+	pds.free()
+
+
+func test_puzzle_data_system_mark_solved_on_null_instance_does_not_crash() -> void:
+	# Arrange
+	var pds := PuzzleDataSystem.new()
+	# active_instance == null
+
+	# Act + Assert — sadece push_warning çağrılmalı; crash olmamalı
+	pds.mark_solved()
+	assert_true(true, "mark_solved() null instance'ta crash etmemeli.")
+	pds.free()
+
+
+func test_puzzle_data_system_increment_attempts_increases_attempt_count() -> void:
+	# Arrange
+	var pr := _make_valid_puzzle_resource()
+	var reg := _make_registry()
+	var inst := _make_instance(pr, reg, ["vordex", "valdris", "thrennic", "ossuric"])
+	var pds := PuzzleDataSystem.new()
+	pds.active_instance = inst
+
+	# Act
+	pds.increment_attempts()
+	pds.increment_attempts()
+
+	# Assert
+	assert_eq(inst.attempt_count, 2)
+	pds.free()
+
+
+func test_puzzle_data_system_increment_attempts_on_null_instance_does_not_crash() -> void:
+	# Arrange
+	var pds := PuzzleDataSystem.new()
+	# active_instance == null
+
+	# Act + Assert
+	pds.increment_attempts()
+	assert_true(true, "increment_attempts() null instance'ta crash etmemeli.")
+	pds.free()

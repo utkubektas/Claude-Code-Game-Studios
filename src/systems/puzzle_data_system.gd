@@ -130,6 +130,24 @@ func next_puzzle_index() -> int:
 	return current_index + 1
 
 
+## Aktif instance'ın çözüm durumunu kontrol eder ve puzzle_solved sinyali yayar.
+## Run Simulation Controller tarafından başarılı RUN sonrası çağrılır.
+func mark_solved() -> void:
+	if active_instance == null:
+		push_warning("PuzzleDataSystem: mark_solved() çağrıldı ama active_instance null.")
+		return
+	active_instance.check_solved()
+
+
+## Aktif instance'ın deneme sayısını artırır.
+## Run Simulation Controller her RUN denemesinde çağırır.
+func increment_attempts() -> void:
+	if active_instance == null:
+		push_warning("PuzzleDataSystem: increment_attempts() çağrıldı ama active_instance null.")
+		return
+	active_instance.increment_attempts()
+
+
 ## Aktif instance'ı kaldırır. Sahne kapatılırken veya sekans bitişinde çağrılır.
 func unload_puzzle() -> void:
 	_disconnect_active_instance()
