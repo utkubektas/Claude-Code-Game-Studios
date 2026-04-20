@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://src/systems/organ_type_registry.gd" id="1"]
+[ext_resource type="Resource" path="res://assets/data/organs/vordex.tres" id="2"]
+[ext_resource type="Resource" path="res://assets/data/organs/valdris.tres" id="3"]
+[ext_resource type="Resource" path="res://assets/data/organs/thrennic.tres" id="4"]
+[ext_resource type="Resource" path="res://assets/data/organs/ossuric.tres" id="5"]
+
+[resource]
+script = ExtResource("1")
+organs = [ExtResource("2"), ExtResource("3"), ExtResource("4"), ExtResource("5")]

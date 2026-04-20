@@ -1,0 +1,12 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/systems/organ_type_resource.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+organ_id = "vordex"
+display_name = "Vordex Emitter"
+role = 0
+output_channels = Array[String](["PULSE"])
+biology_rule_id = "rule_emitter"
+creature_type_ids = Array[String](["xenith_01"])
