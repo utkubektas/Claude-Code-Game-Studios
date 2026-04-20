@@ -1,0 +1,77 @@
+/* Specimen — design tokens
+   Locked colors from brief; agency-filled colors defined here.
+   Aesthetic: deep-space xenobiology lab + 17c anatomical plate. */
+
+:root {
+  /* Surfaces */
+  --bg-void:          #07090c;   /* outside the viewer */
+  --bg-chamber:       #0a0e12;   /* creature viewer bg */
+  --bg-panel:         #0e1319;   /* HUD / cards */
+  --bg-panel-hi:      #141b23;   /* elevated card */
+  --bg-panel-lo:      #080b0f;   /* recessed */
+  --hairline:         #1c2530;   /* 1px rules */
+  --hairline-hi:      #2a3644;
+  --ink-primary:      #e6ecec;   /* warm bone white */
+  --ink-secondary:    #8b98a3;
+  --ink-tertiary:     #556371;
+  --ink-quaternary:   #36424e;
+
+  /* Warm scientific-plate accent (used sparingly, for brass/bone) */
+  --plate-brass:      #b89a6a;
+  --plate-bone:       #d9c9a3;
+
+  /* LOCKED brief colors */
+  --bio-green:        #00FF88;   /* success */
+  --organ-red:        #FF3333;   /* organ failure */
+  --organ-red-dark:   #5a1414;   /* low state of flash cycle */
+  --structural-purple:#AA44FF;   /* structural collapse */
+  --slot-yellow:      #FFD700;   /* selected slot frame */
+  --overlay-black-60: rgba(0,0,0,0.60);
+
+  /* Channel dictionary */
+  --channel-pulse:    #4AB8FF;   /* electric blue, 2px */
+  --channel-fluid:    #C6E76B;   /* organic amber-green, 4px */
+
+  /* 4 organ identity hues — matched oklch chroma/lightness, varied hue */
+  --organ-vordex:     oklch(0.78 0.17 50);    /* amber — emitter */
+  --organ-valdris:    oklch(0.78 0.17 185);   /* cyan — gate */
+  --organ-thrennic:   oklch(0.78 0.17 315);   /* magenta — splitter */
+  --organ-ossuric:    oklch(0.78 0.17 110);   /* chartreuse — terminus */
+
+  /* Type */
+  --font-serif: 'Spectral', Georgia, serif;
+  --font-mono:  'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* Motion */
+  --ease-bio:  cubic-bezier(.22,.61,.36,1);
+  --ease-snap: cubic-bezier(.4, 0, .2, 1);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--bg-void); color: var(--ink-primary); font-family: var(--font-mono); -webkit-font-smoothing: antialiased; }
+
+/* Scrollbars kept out of design surfaces */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+
+/* Utility: fine grid (lab grid paper) */
+.lab-grid {
+  background-image:
+    linear-gradient(to right, rgba(74,184,255,0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(74,184,255,0.035) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+/* Utility: film grain noise */
+.grain::before {
+  content: "";
+  position: absolute; inset: 0;
+  pointer-events: none;
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/></svg>");
+}
+
+/* Text cap */
+.caps { letter-spacing: 0.12em; text-transform: uppercase; }
+.caps-wide { letter-spacing: 0.22em; text-transform: uppercase; }

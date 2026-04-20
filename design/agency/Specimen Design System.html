@@ -1,0 +1,1044 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Specimen — Design System</title>
+<meta name="viewport" content="width=1600"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Spectral:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="shared/tokens.css"/>
+<style>
+body { background: var(--bg-void); color: var(--ink-primary); }
+
+.ds-shell { max-width: 1480px; margin: 0 auto; padding: 56px 48px 120px; }
+
+/* Header */
+.ds-header { border-bottom: 1px solid var(--hairline); padding-bottom: 28px; margin-bottom: 56px; display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px; align-items: end; }
+.ds-h-title { font-family: var(--font-serif); font-weight: 500; font-size: 56px; line-height: 0.96; letter-spacing: -0.01em; }
+.ds-h-title em { font-style: italic; color: var(--plate-brass); }
+.ds-h-sub { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.24em; color: var(--plate-brass); margin-bottom: 12px; }
+.ds-h-desc { font-family: var(--font-serif); font-size: 16px; line-height: 1.55; color: var(--ink-secondary); max-width: 52ch; }
+.ds-h-meta { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.22em; color: var(--ink-tertiary); display: grid; gap: 6px; }
+.ds-h-meta .row { display: grid; grid-template-columns: 140px 1fr; gap: 12px; }
+.ds-h-meta .k { color: var(--plate-brass); }
+
+/* Section */
+.ds-sec { margin-top: 80px; display: grid; grid-template-columns: 220px 1fr; gap: 48px; align-items: start; }
+.ds-sec-kicker { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.26em; color: var(--plate-brass); position: sticky; top: 24px; }
+.ds-sec-kicker-num { display: block; font-family: var(--font-serif); font-size: 36px; color: var(--ink-primary); font-style: italic; margin-top: 6px; letter-spacing: -0.02em; }
+.ds-sec-kicker-desc { font-family: var(--font-serif); font-size: 13px; line-height: 1.5; color: var(--ink-secondary); margin-top: 12px; font-style: italic; }
+.ds-sec-body { }
+
+.ds-h2 { font-family: var(--font-serif); font-size: 32px; font-weight: 500; letter-spacing: -0.01em; margin: 0 0 6px; }
+.ds-h3 { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.24em; color: var(--plate-brass); margin: 40px 0 12px; }
+.ds-p { font-family: var(--font-serif); font-size: 16px; line-height: 1.55; color: var(--ink-secondary); max-width: 62ch; }
+
+/* Color section */
+.swatch-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 20px; }
+.swatch {
+  display: grid;
+  grid-template-rows: 120px auto;
+  border: 1px solid var(--hairline);
+  background: var(--bg-panel);
+  border-radius: 2px; overflow: hidden;
+}
+.sw-chip { display: flex; align-items: flex-end; padding: 12px; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.22em; color: rgba(255,255,255,0.8); }
+.sw-chip.light { color: rgba(0,0,0,0.65); }
+.sw-info { padding: 10px 12px; display: grid; gap: 2px; }
+.sw-name { font-family: var(--font-serif); font-size: 14px; color: var(--ink-primary); }
+.sw-hex { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; color: var(--ink-secondary); }
+.sw-note { font-family: var(--font-mono); font-size: 9px; color: var(--ink-tertiary); letter-spacing: 0.1em; line-height: 1.4; margin-top: 4px; }
+
+/* Type section */
+.type-row { display: grid; grid-template-columns: 200px 1fr; gap: 28px; padding: 24px 0; border-top: 1px solid var(--hairline); align-items: baseline; }
+.type-row:first-of-type { border-top: 1px dashed var(--hairline); }
+.type-meta { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; color: var(--ink-tertiary); line-height: 1.6; }
+.type-meta .mk { color: var(--plate-brass); display: block; }
+.type-spec { display: block; font-size: 9px; }
+.type-sample-serif-hero { font-family: var(--font-serif); font-size: 72px; line-height: 1.02; letter-spacing: -0.02em; font-weight: 500; }
+.type-sample-serif-hero em { font-style: italic; color: var(--plate-brass); }
+.type-sample-serif-title { font-family: var(--font-serif); font-size: 32px; line-height: 1.2; }
+.type-sample-serif-body { font-family: var(--font-serif); font-size: 17px; line-height: 1.55; color: var(--ink-secondary); max-width: 56ch; }
+.type-sample-mono-label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.26em; color: var(--plate-brass); }
+.type-sample-mono-body { font-family: var(--font-mono); font-size: 13px; line-height: 1.6; color: var(--ink-secondary); }
+.type-sample-mono-micro { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.22em; color: var(--ink-tertiary); }
+
+/* Creature / organs */
+.creature-stage {
+  position: relative;
+  border: 1px solid var(--hairline);
+  background: radial-gradient(50% 45% at 50% 50%, rgba(74,184,255,0.04), transparent 70%), var(--bg-chamber);
+  border-radius: 3px;
+  padding: 32px;
+  height: 440px;
+  overflow: hidden;
+}
+.creature-stage svg { width: 100%; height: 100%; display: block; }
+
+.organ-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 20px; }
+.organ-spec {
+  display: grid; grid-template-rows: 120px auto;
+  border: 1px solid var(--hairline);
+  border-radius: 2px; overflow: hidden;
+  background: var(--bg-panel);
+}
+.organ-spec-thumb { display: flex; align-items: center; justify-content: center; background: var(--bg-panel-lo); border-bottom: 1px solid var(--hairline); }
+.organ-spec-body { padding: 12px; }
+.organ-spec-name { font-family: var(--font-serif); font-size: 16px; color: var(--ink-primary); line-height: 1.1; }
+.organ-spec-short { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.22em; color: var(--plate-brass); margin-top: 2px; }
+.organ-spec-role { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.2em; color: var(--ink-tertiary); margin-top: 8px; }
+.organ-spec-desc { font-family: var(--font-mono); font-size: 10px; line-height: 1.5; color: var(--ink-secondary); margin-top: 8px; }
+.organ-spec-swatch { display: flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.14em; color: var(--ink-tertiary); margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--hairline); }
+.organ-spec-swatch .dot { display: inline-block; width: 10px; height: 10px; border-radius: 99px; }
+
+/* Channel dict */
+.chan-table { display: grid; grid-template-columns: 140px 1fr 120px 1fr; gap: 18px; padding: 18px; border: 1px solid var(--hairline); background: var(--bg-panel); border-radius: 2px; margin-top: 12px; align-items: center; }
+.chan-table + .chan-table { margin-top: 10px; }
+.chan-name { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.24em; color: var(--ink-primary); }
+.chan-viz { height: 44px; background: var(--bg-chamber); border: 1px solid var(--hairline); border-radius: 2px; position: relative; overflow: hidden; }
+.chan-pulse-line, .chan-fluid-line { position: absolute; top: 50%; left: 12px; right: 12px; transform: translateY(-50%); }
+.chan-pulse-line { height: 2px; background: var(--channel-pulse); background-image: repeating-linear-gradient(90deg, var(--channel-pulse) 0 6px, transparent 6px 12px); animation: chanFlow 1.2s linear infinite; }
+.chan-fluid-line { height: 4px; background: var(--channel-fluid); background-image: repeating-linear-gradient(90deg, var(--channel-fluid) 0 12px, transparent 12px 20px); animation: chanFlow 1.8s linear infinite; border-radius: 2px; }
+@keyframes chanFlow { to { background-position-x: -24px; } }
+.chan-spec { font-family: var(--font-mono); font-size: 10px; color: var(--ink-secondary); letter-spacing: 0.14em; }
+.chan-spec strong { color: var(--ink-primary); font-weight: 500; }
+.chan-note { font-family: var(--font-mono); font-size: 10px; color: var(--ink-secondary); line-height: 1.5; }
+
+/* UI components */
+.comp-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-top: 16px; }
+.comp-cell {
+  border: 1px solid var(--hairline);
+  background: var(--bg-panel-lo);
+  border-radius: 2px; padding: 20px;
+  min-height: 130px;
+  display: flex; flex-direction: column; justify-content: center; gap: 12px;
+}
+.comp-label { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.22em; color: var(--plate-brass); }
+.comp-sub { font-family: var(--font-mono); font-size: 9px; color: var(--ink-tertiary); letter-spacing: 0.14em; margin-top: -6px; }
+
+/* Render UI pieces */
+.ui-run { display: grid; grid-template-columns: 20px 1fr auto; align-items: center; gap: 10px; padding: 14px 16px; border: 1px solid var(--bio-green); color: var(--bio-green); background: linear-gradient(180deg, rgba(0,255,136,0.08), rgba(0,255,136,0.02)); font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.22em; border-radius: 3px; }
+.ui-run--locked { color: var(--ink-tertiary); border-color: var(--hairline-hi); background: var(--bg-panel-lo); }
+.ui-run .tail { font-size: 9px; letter-spacing: 0.18em; opacity: 0.75; }
+
+.ui-card {
+  display: grid; grid-template-columns: 56px 1fr; gap: 10px;
+  padding: 8px; min-height: 70px;
+  border: 1px solid var(--hairline); background: var(--bg-panel); border-radius: 3px;
+}
+.ui-card--selected { border-color: var(--slot-yellow); box-shadow: 0 0 0 1px var(--slot-yellow), 0 0 14px rgba(255,215,0,0.35); }
+.ui-card .thumb { width: 56px; height: 56px; background: var(--bg-panel-lo); border: 1px solid var(--hairline); border-radius: 2px; display: flex; align-items: center; justify-content: center; }
+.ui-card .name { font-family: var(--font-serif); font-size: 13px; color: var(--ink-primary); line-height: 1.15; }
+.ui-card .meta { font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.18em; color: var(--ink-tertiary); display: flex; align-items: center; gap: 6px; }
+.ui-card .dot { display: inline-block; width: 8px; height: 8px; border-radius: 99px; }
+.ui-card .desc { font-family: var(--font-mono); font-size: 9px; line-height: 1.35; color: var(--ink-secondary); }
+
+.ui-result { padding: 6px 8px; font-family: var(--font-mono); font-size: 11px; }
+.ui-result--bad { color: var(--organ-red); }
+.ui-result--ok { color: var(--bio-green); }
+
+.ui-slot-viz { width: 96px; height: 96px; position: relative; }
+.ui-slot-viz svg { width: 100%; height: 100%; }
+
+/* Motion */
+.motion-row { display: grid; grid-template-columns: 180px 1fr; gap: 28px; padding: 20px 0; border-top: 1px solid var(--hairline); }
+.motion-name { font-family: var(--font-serif); font-size: 22px; color: var(--ink-primary); line-height: 1.15; }
+.motion-dur { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; color: var(--plate-brass); margin-top: 4px; }
+.motion-steps { font-family: var(--font-mono); font-size: 11px; color: var(--ink-secondary); line-height: 1.65; margin: 0; padding: 0; list-style: none; }
+.motion-steps li { display: grid; grid-template-columns: 40px 80px 1fr; gap: 12px; padding: 6px 0; border-bottom: 1px dashed var(--hairline); }
+.motion-steps .step-n { color: var(--plate-brass); font-family: var(--font-mono); letter-spacing: 0.2em; font-size: 10px; }
+.motion-steps .step-t { color: var(--ink-tertiary); }
+
+.motion-viz {
+  height: 56px; margin-top: 12px;
+  background: var(--bg-chamber); border: 1px solid var(--hairline); border-radius: 2px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  position: relative;
+}
+.mv-slot { width: 28px; height: 28px; border-radius: 4px; background: var(--bg-panel-lo); border: 1px solid var(--hairline-hi); }
+
+.success-viz .mv-slot { animation: successBloom 2s infinite; }
+.success-viz .mv-slot:nth-child(1) { animation-delay: 0ms; }
+.success-viz .mv-slot:nth-child(2) { animation-delay: 180ms; }
+.success-viz .mv-slot:nth-child(3) { animation-delay: 360ms; }
+.success-viz .mv-slot:nth-child(4) { animation-delay: 540ms; }
+@keyframes successBloom {
+  0%, 30% { background: var(--bg-panel-lo); border-color: var(--hairline-hi); box-shadow: none; }
+  40%, 70% { background: rgba(0,255,136,0.25); border-color: var(--bio-green); box-shadow: 0 0 14px rgba(0,255,136,0.6); }
+  100% { background: rgba(0,255,136,0.05); border-color: rgba(0,255,136,0.3); box-shadow: none; }
+}
+
+.organfail-viz .mv-slot { animation: organFlash 1.5s infinite; }
+@keyframes organFlash {
+  0%, 5% { background: var(--organ-red); border-color: var(--organ-red); box-shadow: 0 0 12px var(--organ-red); }
+  10%, 15% { background: var(--organ-red-dark); border-color: var(--organ-red-dark); box-shadow: none; }
+  20%, 25% { background: var(--organ-red); border-color: var(--organ-red); box-shadow: 0 0 12px var(--organ-red); }
+  30%, 40% { background: var(--organ-red-dark); border-color: var(--organ-red-dark); box-shadow: none; }
+  45%, 70% { background: rgba(255,51,51,0.2); border-color: rgba(255,51,51,0.5); }
+  100% { background: var(--bg-panel-lo); border-color: var(--hairline-hi); }
+}
+
+.structural-viz {
+  position: relative; overflow: hidden;
+}
+.structural-viz::after {
+  content: "STRUCTURAL FAILURE";
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-serif); font-size: 11px; font-style: italic;
+  color: var(--structural-purple); letter-spacing: 0.14em;
+  text-shadow: 0 0 12px rgba(170,68,255,0.7);
+  background: rgba(0,0,0,0.55);
+  animation: structFade 2.5s infinite;
+}
+@keyframes structFade {
+  0%, 10% { opacity: 0; }
+  15%, 85% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Screen layout diagram */
+.layout-diagram {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 36px;
+  margin-top: 16px;
+  align-items: start;
+}
+.phone-blueprint {
+  position: relative;
+  width: 280px; height: 498px; /* 480x854 scaled */
+  border: 1px solid var(--plate-brass);
+  border-radius: 18px;
+  background: var(--bg-panel-lo);
+  padding: 14px;
+}
+.pb-topbar { height: 8%; border: 1px dashed var(--hairline-hi); padding: 4px 8px; display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 8px; color: var(--plate-brass); letter-spacing: 0.12em; border-radius: 2px; }
+.pb-viewer { height: calc(60% - 8%); margin-top: 4px; border: 1px solid var(--plate-brass); border-radius: 2px; background: radial-gradient(50% 50% at 50% 45%, rgba(74,184,255,0.07), transparent 70%); position: relative; }
+.pb-viewer-label { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.2em; color: var(--plate-brass); text-align: center; }
+.pb-hud { height: calc(40% - 4px); margin-top: 4px; border: 1px dashed var(--hairline-hi); border-radius: 2px; padding: 6px; display: grid; grid-template-rows: 1fr 1fr auto; gap: 4px; }
+.pb-hud-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+.pb-card { background: var(--bg-panel); border: 1px dashed var(--hairline-hi); border-radius: 2px; }
+.pb-run { height: 24px; border: 1px solid var(--bio-green); color: var(--bio-green); font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.2em; display: flex; align-items: center; justify-content: center; border-radius: 2px; }
+
+.layout-table { font-family: var(--font-mono); font-size: 11px; color: var(--ink-secondary); border: 1px solid var(--hairline); background: var(--bg-panel); border-radius: 2px; }
+.layout-table .row { display: grid; grid-template-columns: 1fr auto; gap: 20px; padding: 10px 14px; border-bottom: 1px solid var(--hairline); }
+.layout-table .row:last-child { border-bottom: none; }
+.layout-table .k { color: var(--ink-primary); }
+.layout-table .v { color: var(--plate-bone); letter-spacing: 0.14em; }
+
+/* Principles */
+.principles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 16px; }
+.principle { border: 1px solid var(--hairline); background: var(--bg-panel); padding: 22px; border-radius: 2px; }
+.principle-n { font-family: var(--font-serif); font-size: 48px; font-style: italic; color: var(--plate-brass); line-height: 1; }
+.principle-t { font-family: var(--font-serif); font-size: 18px; margin-top: 8px; }
+.principle-d { font-family: var(--font-mono); font-size: 11px; color: var(--ink-secondary); line-height: 1.55; margin-top: 10px; }
+
+/* Footer */
+.ds-footer { margin-top: 100px; padding-top: 30px; border-top: 1px solid var(--hairline); display: flex; justify-content: space-between; align-items: baseline; }
+.ds-footer .l { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.22em; color: var(--ink-tertiary); }
+.ds-footer .r { font-family: var(--font-serif); font-size: 13px; font-style: italic; color: var(--plate-brass); }
+
+a.ds-link { color: var(--plate-brass); text-decoration: none; border-bottom: 1px dashed currentColor; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; }
+a.ds-link:hover { color: var(--plate-bone); }
+</style>
+</head>
+<body>
+<div class="ds-shell">
+
+  <!-- HEADER -->
+  <header class="ds-header">
+    <div>
+      <div class="ds-h-sub">SPECIMEN · DESIGN SYSTEM · v1.0 · 2026-04-16</div>
+      <h1 class="ds-h-title">A field manual for <em>alien anatomy</em>.</h1>
+      <p class="ds-h-desc" style="margin-top:22px">
+        Specimen is a mobile logic puzzle. The player is a xenobiologist. This is the visual system
+        — tone, palette, type, organs, channels, components, motion — for the repair console the
+        player operates. The look sits in the seam between a 17th-century anatomical plate and a
+        deep-space containment lab. The only saturated light in the room is bioluminescence.
+      </p>
+    </div>
+    <div class="ds-h-meta">
+      <div class="row"><span class="k">AESTHETIC</span><span>Anatomical plate × xenobiology</span></div>
+      <div class="row"><span class="k">PLATFORM</span><span>iOS · Android · 480 × 854 portrait</span></div>
+      <div class="row"><span class="k">ENGINE</span><span>Godot 4.6 · Compatibility · 60fps</span></div>
+      <div class="row"><span class="k">SEE ALSO</span><span><a class="ds-link" href="Specimen Prototype.html">→ live prototype</a></span></div>
+    </div>
+  </header>
+
+  <!-- 01 PRINCIPLES -->
+  <section class="ds-sec">
+    <div class="ds-sec-kicker">01 · PRINCIPLES<span class="ds-sec-kicker-num">i.</span>
+      <div class="ds-sec-kicker-desc">The three rules the whole system obeys.</div>
+    </div>
+    <div class="ds-sec-body">
+      <h2 class="ds-h2">The creature is the interface.</h2>
+      <p class="ds-p">No tooltips, no tutorial, no kill-screen text that explains why something failed.
+        Everything the player learns is inferred from how the specimen responds. Pixels serve that.</p>
+
+      <div class="principles">
+        <div class="principle">
+          <div class="principle-n">01</div>
+          <div class="principle-t">Dim is default, light means life.</div>
+          <div class="principle-d">The chamber is near-black. Saturated color only appears where something is alive — a healthy organ, a running channel, a revival glow. Damage = dim. Never the other way round.</div>
+        </div>
+        <div class="principle">
+          <div class="principle-n">02</div>
+          <div class="principle-t">Legibility over literalism.</div>
+          <div class="principle-d">The creature is alien, not chaotic. Silhouettes, organs, and channels read at a glance on a 5-inch portrait screen. Monospace labels sit under every diagram — we treat the UI as a specimen tag, not a game HUD.</div>
+        </div>
+        <div class="principle">
+          <div class="principle-n">03</div>
+          <div class="principle-t">Failure is informative.</div>
+          <div class="principle-d">A wrong answer isn't a punishment screen. It's data. Organ rejection flashes the offending slots only; structural failure claims the whole specimen. The player learns which by watching.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 COLOR -->
+  <section class="ds-sec">
+    <div class="ds-sec-kicker">02 · COLOR<span class="ds-sec-kicker-num">ii.</span>
+      <div class="ds-sec-kicker-desc">Locked brief colors (do not shift) plus the agency-filled palette.</div>
+    </div>
+    <div class="ds-sec-body">
+      <h2 class="ds-h2">Palette.</h2>
+      <p class="ds-p">Five colors carry meaning: two greens, a red, a violet, a yellow. All other color is surface.
+        The palette is calibrated so bioluminescence reads instantly against a near-black chamber.</p>
+
+      <div class="ds-h3">// LOCKED — SEMANTIC COLOR</div>
+      <div class="swatch-grid">
+        <div class="swatch">
+          <div class="sw-chip" style="background:#00FF88; color:#001a0e">BIOLUMINESCENCE</div>
+          <div class="sw-info"><div class="sw-name">Biolum Green</div><div class="sw-hex">#00FF88</div><div class="sw-note">Revival cascade. Living creature. Success.</div></div>
+        </div>
+        <div class="swatch">
+          <div class="sw-chip" style="background:#FF3333">ORGAN FAILURE</div>
+          <div class="sw-info"><div class="sw-name">Organ Red</div><div class="sw-hex">#FF3333</div><div class="sw-note">Misfit flash. Slot-level rejection only.</div></div>
+        </div>
+        <div class="swatch">
+          <div class="sw-chip" style="background:#5a1414">ORGAN RED · LOW</div>
+          <div class="sw-info"><div class="sw-name">Organ Red Dark</div><div class="sw-hex">#5A1414</div><div class="sw-note">Low-state of the 150ms flash cycle.</div></div>
+        </div>
+        <div class="swatch">
+          <div class="sw-chip" style="background:#AA44FF">STRUCTURAL COLLAPSE</div>
+          <div class="sw-info"><div class="sw-name">Structural Violet</div><div class="sw-hex">#AA44FF</div><div class="sw-note">Whole-system failure. Never used per-organ.</div></div>
+        </div>
+        <div class="swatch">
+          <div class="sw-chip light" style="background:#FFD700">SELECTED SLOT</div>
+          <div class="sw-info"><div class="sw-name">Slot Yellow</div><div class="sw-hex">#FFD700</div><div class="sw-note">Selection frame. No other use.</div></div>
+        </div>
+        <div class="swatch">
+          <div class="sw-chip" style="background:rgba(0,0,0,0.60)">OVERLAY</div>
+          <div class="sw-info"><div class="sw-name">Black 60%</div><div class="sw-hex">rgba(0,0,0,0.6)</div><div class="sw-note">Structural-failure screen dim.</div></div>
+        </div>
+      </div>
+
+      <div class="ds-h3">// AGENCY-FILLED — SURFACES & CHANNELS</div>
+      <div class="swatch-grid">
+        <div class="swatch">
+          <div class="sw-chip" style="background:#07090c">VOID</div>
+          <div class="sw-info"><div class="sw-name">Bg Void</div><div class="sw-hex">#07090C</div><div class="sw-note">Outside the chamber — app shell.</div></div>
+        </div>
+        <div class="swatch">
+          <div class="sw-chip" style="background:#0a0e12">CHAMBER</div>
+          <div class="sw-info"><div class="sw-name">Bg Chamber</div><div class="sw-hex">#0A0E12</div><div class="sw-note">Specimen viewer. Near-black, cool.</div></div>
+        </div>
+        <div class="swatch">
+          <div class="sw-chip" style="background:#141b23">PANEL</div>
+          <div class="sw-info"><div class="sw-name">Bg Panel HI</div><div class="sw-hex">#141B23</div><div class="sw-note">Elevated card / HUD.</div></div>
+        </div>
+        <div class="swatch">
+          <div class="sw-chip" style="background:#4AB8FF; color:#051822">PULSE CHANNEL</div>
+          <div class="sw-info"><div class="sw-name">Channel Pulse</div><div class="sw-hex">#4AB8FF</div><div class="sw-note">Bioelectric — thin, electric blue, 2px.</div></div>
+        </div>
+        <div class="swatch">
+          <div class="sw-chip light" style="background:#C6E76B">FLUID CHANNEL</div>
+          <div class="sw-info"><div class="sw-name">Channel Fluid</div><div class="sw-hex">#C6E76B</div><div class="sw-note">Organic sap — thick, amber-green, 4px.</div></div>
+        </div>
+        <div class="swatch">
+          <div class="sw-chip light" style="background:#b89a6a">PLATE BRASS</div>
+          <div class="sw-info"><div class="sw-name">Plate Brass</div><div class="sw-hex">#B89A6A</div><div class="sw-note">Chrome — labels, corner brackets, kickers.</div></div>
+        </div>
+      </div>
+
+      <div class="ds-h3">// ORGAN IDENTITY — 4 HUES, ONE FAMILY</div>
+      <p class="ds-p" style="font-size:14px">Matched chroma &amp; lightness in oklch. Each organ owns one hue; damaged sprites dim the same hue rather than shifting it.</p>
+      <div class="swatch-grid" style="grid-template-columns: repeat(4, 1fr);">
+        <div class="swatch">
+          <div class="sw-chip" style="background:oklch(0.78 0.17 50); color:#1a0e00">VORDEX · SOURCE</div>
+          <div class="sw-info"><div class="sw-name">Vordex Amber</div><div class="sw-hex">oklch(.78 .17 50)</div><div class="sw-note">Emitter — radiant warm. "It gives."</div></div>
+        </div>
+        <div class="swatch">
+          <div class="sw-chip" style="background:oklch(0.78 0.17 185); color:#001a18">VALDRIS · GATE</div>
+          <div class="sw-info"><div class="sw-name">Valdris Cyan</div><div class="sw-hex">oklch(.78 .17 185)</div><div class="sw-note">Gate — cold, paired logic.</div></div>
+        </div>
+        <div class="swatch">
+          <div class="sw-chip" style="background:oklch(0.78 0.17 315); color:#1a0012">THRENNIC · SPLITTER</div>
+          <div class="sw-info"><div class="sw-name">Thrennic Magenta</div><div class="sw-hex">oklch(.78 .17 315)</div><div class="sw-note">Splitter — violet-pink, fork shapes.</div></div>
+        </div>
+        <div class="swatch">
+          <div class="sw-chip light" style="background:oklch(0.78 0.17 110)">OSSURIC · SINK</div>
+          <div class="sw-info"><div class="sw-name">Ossuric Chartreuse</div><div class="sw-hex">oklch(.78 .17 110)</div><div class="sw-note">Terminus — sickly chartreuse, "ends here."</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 TYPE -->
+  <section class="ds-sec">
+    <div class="ds-sec-kicker">03 · TYPOGRAPHY<span class="ds-sec-kicker-num">iii.</span>
+      <div class="ds-sec-kicker-desc">Two voices. A scientific plate and its instrument.</div>
+    </div>
+    <div class="ds-sec-body">
+      <h2 class="ds-h2">Two fonts. Two voices.</h2>
+      <p class="ds-p"><em style="font-family: var(--font-serif); color: var(--plate-brass)">Spectral</em>
+        is the field notebook — the human observer annotating a specimen. <span style="font-family:var(--font-mono);color:var(--ink-primary);letter-spacing:0.12em">JetBrains&nbsp;Mono</span> is the instrument
+        — readings, sample IDs, anything the machine writes.</p>
+
+      <div class="type-row">
+        <div class="type-meta">
+          <span class="mk">SPECTRAL</span>
+          500 · -0.02em · 72/1.02
+          <span class="type-spec">Creature names, section titles, hero headings</span>
+        </div>
+        <div class="type-sample-serif-hero">Vorrkai <em>var. IV</em></div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">
+          <span class="mk">SPECTRAL</span>
+          500 · italic · 32/1.2
+          <span class="type-spec">Mid-title, callout labels</span>
+        </div>
+        <div class="type-sample-serif-title"><em>The creature is the interface.</em></div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">
+          <span class="mk">SPECTRAL</span>
+          400 · 17/1.55
+          <span class="type-spec">Long-form body, field notes</span>
+        </div>
+        <div class="type-sample-serif-body">
+          The subject exhibits four paired cavities along its dorsal axis. No vocalizations. The tissue is warm to touch, though sensors read 37.2°C — roughly human. Whether it is metabolizing at all remains unclear.
+        </div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">
+          <span class="mk">JETBRAINS MONO</span>
+          500 · 0.26em · 11px
+          <span class="type-spec">System kickers, all-caps labels</span>
+        </div>
+        <div class="type-sample-mono-label">// OBSERVED · 15:04:02 · CASE 04/147</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">
+          <span class="mk">JETBRAINS MONO</span>
+          400 · 13/1.6
+          <span class="type-spec">Instrument readouts, machine voice</span>
+        </div>
+        <div class="type-sample-mono-body">
+          BPM         74<br/>
+          STATE       STABLE<br/>
+          SLOTS       4/4<br/>
+          CHANNELS    [PULSE × 2 · FLUID × 2]<br/>
+          ATT         03
+        </div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta">
+          <span class="mk">JETBRAINS MONO</span>
+          400 · 0.22em · 10px
+          <span class="type-spec">Footnote · specimen tag · chamber label</span>
+        </div>
+        <div class="type-sample-mono-micro">OBS-04 · 37.2°C · 1.0atm · x1.0 LIVE</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 SCREEN LAYOUT -->
+  <section class="ds-sec">
+    <div class="ds-sec-kicker">04 · LAYOUT<span class="ds-sec-kicker-num">iv.</span>
+      <div class="ds-sec-kicker-desc">Portrait, 480 × 854. Viewer : HUD = 60 : 40.</div>
+    </div>
+    <div class="ds-sec-body">
+      <h2 class="ds-h2">The screen, as a blueprint.</h2>
+      <p class="ds-p">Every anchor is expressed as a percentage of screen height or width, so the same
+        layout holds from a 4.7-inch to a 6.9-inch device.</p>
+
+      <div class="layout-diagram">
+        <div class="phone-blueprint">
+          <div class="pb-topbar"><span>VORRKAI IV</span><span>ATT 03</span></div>
+          <div class="pb-viewer">
+            <div class="pb-viewer-label">SPECIMEN VIEWER<br/>60% OF SCREEN H</div>
+          </div>
+          <div class="pb-hud">
+            <div class="pb-hud-cards"><div class="pb-card"></div><div class="pb-card"></div></div>
+            <div class="pb-hud-cards"><div class="pb-card"></div><div class="pb-card"></div></div>
+            <div class="pb-run">▶ RUN SIMULATION</div>
+          </div>
+        </div>
+        <div class="layout-table">
+          <div class="row"><span class="k">Design size</span><span class="v">480 × 854 px</span></div>
+          <div class="row"><span class="k">Viewer/HUD split</span><span class="v">60 / 40 %H</span></div>
+          <div class="row"><span class="k">Creature anchor Y</span><span class="v">40 %H</span></div>
+          <div class="row"><span class="k">Slot size</span><span class="v">80 × 80 px</span></div>
+          <div class="row"><span class="k">Min slot spacing</span><span class="v">64 px</span></div>
+          <div class="row"><span class="k">Inventory card</span><span class="v">44 %W · 70 px H</span></div>
+          <div class="row"><span class="k">Inventory gutter</span><span class="v">5 %W · 8 px gap</span></div>
+          <div class="row"><span class="k">RUN button Y</span><span class="v">85 %H</span></div>
+          <div class="row"><span class="k">Min hit area</span><span class="v">48 × 48 px</span></div>
+          <div class="row"><span class="k">Min body text</span><span class="v">13 px</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 CREATURE -->
+  <section class="ds-sec">
+    <div class="ds-sec-kicker">05 · CREATURE<span class="ds-sec-kicker-num">v.</span>
+      <div class="ds-sec-kicker-desc">Vorrkai IV — annotated wireframe, agency to replace.</div>
+    </div>
+    <div class="ds-sec-body">
+      <h2 class="ds-h2">The specimen.</h2>
+      <p class="ds-p">The silhouette is a blueprint placeholder — bilateral, slot-symmetric, centrally
+        anchored. Final form is the agency's call. All we fix: <strong style="color:var(--ink-primary)">80%
+        screen width; a fade-in from dim; four slot anchors at compass points.</strong></p>
+
+      <div class="creature-stage" id="creatureStage"></div>
+    </div>
+  </section>
+
+  <!-- 06 ORGANS -->
+  <section class="ds-sec">
+    <div class="ds-sec-kicker">06 · ORGANS<span class="ds-sec-kicker-num">vi.</span>
+      <div class="ds-sec-kicker-desc">Four types · two states · one rule of thumb per organ.</div>
+    </div>
+    <div class="ds-sec-body">
+      <h2 class="ds-h2">Four organs, four jobs.</h2>
+      <p class="ds-p">Each organ has a single function the player will eventually recognize by silhouette
+        alone. Treatments shown below are placeholders — the agency delivers the final sprites. A
+        <strong style="color:var(--ink-primary)">damaged</strong> variant keeps the identity hue, dims it, and distorts the silhouette.</p>
+
+      <div class="organ-grid" id="organGrid"></div>
+
+      <div class="ds-h3" style="margin-top:32px">// DAMAGED STATE · RULE</div>
+      <p class="ds-p" style="font-size:14px">A damaged organ must still be <em style="font-family:var(--font-serif); color:var(--plate-bone)">recognizable</em> — we never shift hue. We reduce luminance, break the silhouette, and let the health tick flip red. The player should feel, without reading, that something is wrong.</p>
+    </div>
+  </section>
+
+  <!-- 07 CHANNELS -->
+  <section class="ds-sec">
+    <div class="ds-sec-kicker">07 · CHANNELS<span class="ds-sec-kicker-num">vii.</span>
+      <div class="ds-sec-kicker-desc">Two channel types. Two weights. Two rhythms.</div>
+    </div>
+    <div class="ds-sec-body">
+      <h2 class="ds-h2">PULSE and FLUID.</h2>
+      <p class="ds-p">Channels are how organs talk. A <em style="font-family:var(--font-serif); color:var(--plate-bone)">PULSE</em> is a bioelectric signal — fast, thin, sparky. A <em style="font-family:var(--font-serif); color:var(--plate-bone)">FLUID</em> is organic matter in motion — slow, viscous, broad. Weight and rhythm do all the teaching; the player never needs a legend.</p>
+
+      <div class="chan-table">
+        <div class="chan-name">PULSE</div>
+        <div class="chan-viz"><div class="chan-pulse-line"></div></div>
+        <div class="chan-spec">#4AB8FF<br/><strong>2 px</strong> · 1–4 px</div>
+        <div class="chan-note">Thin electric-blue dashes, tight spacing, 1.2s loop. Sparse and precise.</div>
+      </div>
+      <div class="chan-table">
+        <div class="chan-name">FLUID</div>
+        <div class="chan-viz"><div class="chan-fluid-line"></div></div>
+        <div class="chan-spec">#C6E76B<br/><strong>4 px</strong> · 2–8 px</div>
+        <div class="chan-note">Thick amber-green segments, wider gaps, 1.8s loop. Organic, heavy.</div>
+      </div>
+
+      <div class="ds-h3">// ROUTING</div>
+      <p class="ds-p" style="font-size:14px">MVP uses straight lines; V1 uses curved organic routes with
+        bezier control offsets on the perpendicular to the slot-pair axis. Curvature bends toward the
+        creature's centerline for FLUID, and away for PULSE — so the two never overlap visually.</p>
+    </div>
+  </section>
+
+  <!-- 08 COMPONENTS -->
+  <section class="ds-sec">
+    <div class="ds-sec-kicker">08 · COMPONENTS<span class="ds-sec-kicker-num">viii.</span>
+      <div class="ds-sec-kicker-desc">HUD parts in every state they need to ship in.</div>
+    </div>
+    <div class="ds-sec-body">
+      <h2 class="ds-h2">HUD components.</h2>
+
+      <div class="ds-h3">// RUN BUTTON · 3 STATES</div>
+      <div class="comp-row">
+        <div class="comp-cell">
+          <div class="comp-label">NORMAL</div>
+          <div class="ui-run"><span>▶</span><span>RUN SIMULATION</span><span class="tail">[ ENTER ]</span></div>
+          <div class="comp-sub">all 4 slots filled · tappable</div>
+        </div>
+        <div class="comp-cell">
+          <div class="comp-label">LOCKED</div>
+          <div class="ui-run ui-run--locked"><span>▶</span><span>RUN SIMULATION</span><span class="tail">[ LOCKED ]</span></div>
+          <div class="comp-sub">alpha 0.5 equiv · slots incomplete</div>
+        </div>
+        <div class="comp-cell">
+          <div class="comp-label">SOLVED · HIDDEN</div>
+          <div style="padding:14px 16px;border:1px dashed var(--hairline);color:var(--ink-tertiary);font-family:var(--font-mono);font-size:10px;letter-spacing:0.2em;text-align:center;border-radius:3px;">/ / CONTINUE REPLACES RUN / /</div>
+          <div class="comp-sub">replaced by CONTINUE button</div>
+        </div>
+      </div>
+
+      <div class="ds-h3">// INVENTORY CARD · 4 STATES</div>
+      <div class="comp-row" style="grid-template-columns: repeat(4, 1fr);">
+        <div class="comp-cell">
+          <div class="comp-label">NORMAL</div>
+          <div class="ui-card">
+            <div class="thumb"><svg viewBox="-40 -40 80 80" width="48" height="48"><circle r="20" fill="none" stroke="oklch(0.78 0.17 50)" stroke-width="1.4"/><circle r="7" fill="oklch(0.78 0.17 50)"/></svg></div>
+            <div>
+              <div class="name">Vordex Emitter</div>
+              <div class="meta"><span class="dot" style="background:oklch(0.78 0.17 50)"></span>SOURCE · VDX</div>
+              <div class="desc">Bioelectric pacemaker.</div>
+            </div>
+          </div>
+          <div class="comp-sub">unselected, available</div>
+        </div>
+        <div class="comp-cell">
+          <div class="comp-label">SELECTED</div>
+          <div class="ui-card ui-card--selected">
+            <div class="thumb"><svg viewBox="-40 -40 80 80" width="48" height="48"><rect x="-20" y="-14" width="40" height="28" rx="2" fill="none" stroke="oklch(0.78 0.17 185)" stroke-width="1.4"/><line x1="-20" y1="0" x2="20" y2="0" stroke="oklch(0.78 0.17 185)" stroke-width="1.4"/></svg></div>
+            <div>
+              <div class="name">Valdris Gate</div>
+              <div class="meta"><span class="dot" style="background:oklch(0.78 0.17 185)"></span>GATE · VLD</div>
+              <div class="desc">Paired-input AND gate.</div>
+            </div>
+          </div>
+          <div class="comp-sub">slot-yellow ring + glow</div>
+        </div>
+        <div class="comp-cell">
+          <div class="comp-label">INSTALLED</div>
+          <div class="ui-card" style="opacity:0.4;position:relative;">
+            <div class="thumb"><svg viewBox="-40 -40 80 80" width="48" height="48"><circle r="5" fill="oklch(0.78 0.17 315)"/><line x1="0" y1="0" x2="-18" y2="-12" stroke="oklch(0.78 0.17 315)" stroke-width="1.4"/><line x1="0" y1="0" x2="-18" y2="12" stroke="oklch(0.78 0.17 315)" stroke-width="1.4"/><line x1="0" y1="0" x2="18" y2="0" stroke="oklch(0.78 0.17 315)" stroke-width="1.4"/></svg></div>
+            <div>
+              <div class="name">Thrennic Splitter</div>
+              <div class="meta"><span class="dot" style="background:oklch(0.78 0.17 315)"></span>SPLITTER · THR</div>
+              <div class="desc">Duplicates a PULSE.</div>
+            </div>
+            <div style="position:absolute;top:6px;right:6px;font-family:var(--font-mono);font-size:7px;letter-spacing:0.18em;color:var(--bio-green);border:1px solid rgba(0,255,136,0.35);padding:2px 4px;border-radius:2px;">INSTALLED</div>
+          </div>
+          <div class="comp-sub">dimmed, un-tappable</div>
+        </div>
+        <div class="comp-cell">
+          <div class="comp-label">LOCKED (PRE-ATT)</div>
+          <div class="ui-card" style="opacity:0.5;">
+            <div class="thumb"><svg viewBox="-40 -40 80 80" width="48" height="48"><circle r="20" fill="none" stroke="oklch(0.78 0.17 110)" stroke-width="1.4" stroke-dasharray="3 2"/><circle r="12" fill="none" stroke="oklch(0.78 0.17 110)" stroke-width="1.4"/></svg></div>
+            <div>
+              <div class="name">Ossuric Terminus</div>
+              <div class="meta"><span class="dot" style="background:oklch(0.78 0.17 110)"></span>SINK · OSS</div>
+              <div class="desc">Signal terminator.</div>
+            </div>
+          </div>
+          <div class="comp-sub">unlocks after attempt 01</div>
+        </div>
+      </div>
+
+      <div class="ds-h3">// SLOT FRAME · 3 STATES</div>
+      <div class="comp-row">
+        <div class="comp-cell" style="align-items:center; flex-direction:row; justify-content:space-around;">
+          <div class="ui-slot-viz" id="slotEmpty"></div>
+          <div class="ui-slot-viz" id="slotSelected"></div>
+          <div class="ui-slot-viz" id="slotFilled"></div>
+        </div>
+        <div class="comp-cell" style="grid-column: span 2;">
+          <div class="comp-label">SLOT RULES</div>
+          <ul style="font-family:var(--font-mono);font-size:11px;color:var(--ink-secondary);line-height:1.65;padding-left:18px;margin:0;">
+            <li>Corner brackets always visible — they are the slot's identity.</li>
+            <li>Empty state: dashed inset rect, "SLOT S1" label, muted ink-quaternary.</li>
+            <li>Selected target (empty + an organ is in-hand): yellow dashed ring, 5-4 dash, slow spin.</li>
+            <li>Filled: brackets + ring adopt organ identity hue. Health tick in top-right.</li>
+            <li>Failing: brackets flash organ-red three times at 150ms period, then dim.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ds-h3">// RESULT AREA</div>
+      <div class="comp-row">
+        <div class="comp-cell"><div class="comp-label">EMPTY</div><div class="ui-result" style="color:var(--ink-tertiary)">Awaiting operator input…</div></div>
+        <div class="comp-cell"><div class="comp-label">SUCCESS</div><div class="ui-result ui-result--ok">✓ Specimen repaired</div></div>
+        <div class="comp-cell"><div class="comp-label">FAILURE</div><div class="ui-result ui-result--bad">✗ Organ misfit — rejection detected</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 09 MOTION -->
+  <section class="ds-sec">
+    <div class="ds-sec-kicker">09 · MOTION<span class="ds-sec-kicker-num">ix.</span>
+      <div class="ds-sec-kicker-desc">Three outcomes. Three rhythms. Zero ambiguity.</div>
+    </div>
+    <div class="ds-sec-body">
+      <h2 class="ds-h2">The creature speaks in three sequences.</h2>
+      <p class="ds-p">Every timing below is Godot-Tween-compatible. V1 particle upgrades replace the glow
+        plates but keep the choreography. Durations are budgeted generously — these are the only
+        moments the whole game stops to say something.</p>
+
+      <div class="motion-row">
+        <div>
+          <div class="motion-name">Revival</div>
+          <div class="motion-dur">~2.00s · satisfying, restrained</div>
+          <div class="motion-viz success-viz">
+            <div class="mv-slot"></div><div class="mv-slot"></div><div class="mv-slot"></div><div class="mv-slot"></div>
+          </div>
+        </div>
+        <ol class="motion-steps">
+          <li><span class="step-n">01</span><span class="step-t">0.10s</span><span>Soft white pulse from creature center · ease-out</span></li>
+          <li><span class="step-n">02</span><span class="step-t">0.72s</span><span>Each slot blooms to biolum-green in sequence · 180ms interval</span></li>
+          <li><span class="step-n">03</span><span class="step-t">hold</span><span>Creature settles on pale-green tint · chamber saturate +10%</span></li>
+          <li><span class="step-n">04</span><span class="step-t">—</span><span>RUN is replaced by CONTINUE · result area reads "Specimen repaired"</span></li>
+        </ol>
+      </div>
+
+      <div class="motion-row">
+        <div>
+          <div class="motion-name">Organ rejection</div>
+          <div class="motion-dur">~1.50s · sharp, local, diagnostic</div>
+          <div class="motion-viz organfail-viz">
+            <div class="mv-slot"></div><div class="mv-slot"></div><div class="mv-slot"></div><div class="mv-slot"></div>
+          </div>
+        </div>
+        <ol class="motion-steps">
+          <li><span class="step-n">01</span><span class="step-t">0.00s</span><span>All <em>wrong</em> slots flash organ-red simultaneously · correct slots untouched</span></li>
+          <li><span class="step-n">02</span><span class="step-t">0.45s</span><span>Three 150ms flash cycles between #FF3333 and #5A1414</span></li>
+          <li><span class="step-n">03</span><span class="step-t">0.50s</span><span>Residual red tint lingers on failed slots, then clears</span></li>
+          <li><span class="step-n">04</span><span class="step-t">—</span><span>Chamber 3-frame shake · result area: "Organ misfit — rejection detected"</span></li>
+        </ol>
+      </div>
+
+      <div class="motion-row">
+        <div>
+          <div class="motion-name">Structural failure</div>
+          <div class="motion-dur">~2.50s · dramatic, whole-specimen</div>
+          <div class="motion-viz structural-viz">
+            <div class="mv-slot"></div><div class="mv-slot"></div><div class="mv-slot"></div><div class="mv-slot"></div>
+          </div>
+        </div>
+        <ol class="motion-steps">
+          <li><span class="step-n">01</span><span class="step-t">0.20s</span><span>Chamber dims 60% — black overlay crossfade</span></li>
+          <li><span class="step-n">02</span><span class="step-t">0.00s</span><span>All slots flash structural-violet simultaneously</span></li>
+          <li><span class="step-n">03</span><span class="step-t">0.30s</span><span>"STRUCTURAL FAILURE" in Spectral italic fades in · violet glow</span></li>
+          <li><span class="step-n">04</span><span class="step-t">1.00s</span><span>Holds · subtitle "// SUBJECT COHERENCE LOST" in mono</span></li>
+          <li><span class="step-n">05</span><span class="step-t">0.50s</span><span>Overlay and text fade · board returns to idle</span></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="ds-footer">
+    <div class="l">// END OF FIELD MANUAL · SPECIMEN v1.0 · 2026-04-16 · <a class="ds-link" href="Specimen Prototype.html">OPEN PROTOTYPE →</a></div>
+    <div class="r">Dr. I. Hale, xenobiology.</div>
+  </footer>
+
+</div>
+
+<script>
+// ---- Creature blueprint render (SVG) ----
+(function(){
+  const stage = document.getElementById("creatureStage");
+  const svgNS = "http://www.w3.org/2000/svg";
+  const w = 1100, h = 400;
+  const svg = document.createElementNS(svgNS, "svg");
+  svg.setAttribute("viewBox", `0 0 ${w} ${h}`);
+  svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+
+  // Grid
+  const grid = document.createElementNS(svgNS, "rect");
+  grid.setAttribute("width", w); grid.setAttribute("height", h); grid.setAttribute("fill", "url(#xhatch2)");
+  const defs = document.createElementNS(svgNS, "defs");
+  defs.innerHTML = `
+    <pattern id="xhatch2" patternUnits="userSpaceOnUse" width="10" height="10" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="10" stroke="rgba(184,154,106,0.08)" stroke-width="0.5"/>
+    </pattern>`;
+  svg.appendChild(defs);
+
+  // Silhouette centered
+  const cx = w/2, cy = h/2;
+  const body = document.createElementNS(svgNS, "path");
+  body.setAttribute("d", `
+    M ${cx} ${cy-150}
+    C ${cx+130} ${cy-140}, ${cx+190} ${cy-70}, ${cx+170} ${cy}
+    C ${cx+210} ${cy+40}, ${cx+160} ${cy+130}, ${cx+80} ${cy+150}
+    C ${cx+70} ${cy+180}, ${cx-70} ${cy+180}, ${cx-80} ${cy+150}
+    C ${cx-160} ${cy+130}, ${cx-210} ${cy+40}, ${cx-170} ${cy}
+    C ${cx-190} ${cy-70}, ${cx-130} ${cy-140}, ${cx} ${cy-150} Z`);
+  body.setAttribute("fill", "rgba(184,154,106,0.03)");
+  body.setAttribute("stroke", "#d9c9a3");
+  body.setAttribute("stroke-opacity", "0.55");
+  body.setAttribute("stroke-width", "1");
+  svg.appendChild(body);
+
+  // Central axis
+  const axis = document.createElementNS(svgNS, "path");
+  axis.setAttribute("d", `M ${cx} ${cy-150} L ${cx} ${cy+180}`);
+  axis.setAttribute("stroke", "#d9c9a3"); axis.setAttribute("stroke-opacity", "0.15"); axis.setAttribute("stroke-width","0.6"); axis.setAttribute("stroke-dasharray","3 4");
+  svg.appendChild(axis);
+  const mid = document.createElementNS(svgNS, "path");
+  mid.setAttribute("d", `M ${cx-200} ${cy} L ${cx+200} ${cy}`);
+  mid.setAttribute("stroke", "#d9c9a3"); mid.setAttribute("stroke-opacity", "0.15"); mid.setAttribute("stroke-width","0.6"); mid.setAttribute("stroke-dasharray","3 4");
+  svg.appendChild(mid);
+
+  // Slot positions: top, left, right, bottom
+  const slots = [
+    { id: "S1", x: cx,       y: cy-90,  organ: "VORDEX",   role: "SOURCE",   hue: "oklch(0.78 0.17 50)" },
+    { id: "S2", x: cx-120,   y: cy+10,  organ: "THRENNIC", role: "SPLITTER", hue: "oklch(0.78 0.17 315)" },
+    { id: "S3", x: cx+120,   y: cy+10,  organ: "VALDRIS",  role: "GATE",     hue: "oklch(0.78 0.17 185)" },
+    { id: "S4", x: cx,       y: cy+110, organ: "OSSURIC",  role: "SINK",     hue: "oklch(0.78 0.17 110)" },
+  ];
+
+  // Channels (curves)
+  const channels = [
+    { from: 0, to: 1, type: "pulse", off: -40 },
+    { from: 0, to: 2, type: "pulse", off: -40 },
+    { from: 1, to: 3, type: "fluid", off: 40 },
+    { from: 2, to: 3, type: "fluid", off: 40 },
+  ];
+  channels.forEach((ch, i) => {
+    const a = slots[ch.from], b = slots[ch.to];
+    const mx = (a.x+b.x)/2, my=(a.y+b.y)/2;
+    const dx = b.x-a.x, dy=b.y-a.y, len=Math.hypot(dx,dy);
+    const nx=-dy/len*ch.off, ny=dx/len*ch.off;
+    const d = `M ${a.x} ${a.y} Q ${mx+nx} ${my+ny} ${b.x} ${b.y}`;
+    // base dim
+    const base = document.createElementNS(svgNS,"path");
+    base.setAttribute("d", d); base.setAttribute("fill","none");
+    base.setAttribute("stroke", ch.type === "pulse" ? "#4AB8FF" : "#C6E76B");
+    base.setAttribute("stroke-width", ch.type === "pulse" ? 1.6 : 3.4);
+    base.setAttribute("stroke-opacity", "0.25"); base.setAttribute("stroke-linecap","round");
+    svg.appendChild(base);
+    // active flow
+    const flow = document.createElementNS(svgNS,"path");
+    flow.setAttribute("d", d); flow.setAttribute("fill","none");
+    flow.setAttribute("stroke", ch.type === "pulse" ? "#4AB8FF" : "#C6E76B");
+    flow.setAttribute("stroke-width", ch.type === "pulse" ? 2 : 3.8);
+    flow.setAttribute("stroke-linecap","round");
+    flow.setAttribute("stroke-dasharray", ch.type === "pulse" ? "3 5" : "6 9");
+    flow.style.animation = `dsFlow ${ch.type==="pulse"?1.2:1.8}s linear infinite`;
+    svg.appendChild(flow);
+    // label at mid
+    const tg = document.createElementNS(svgNS,"g");
+    tg.setAttribute("transform", `translate(${mx+nx*0.7}, ${my+ny*0.7})`);
+    const bg = document.createElementNS(svgNS,"rect");
+    bg.setAttribute("x","-22"); bg.setAttribute("y","-8"); bg.setAttribute("width","44"); bg.setAttribute("height","14"); bg.setAttribute("rx","2");
+    bg.setAttribute("fill","#0a0e12"); bg.setAttribute("stroke", ch.type==="pulse"?"#4AB8FF":"#C6E76B"); bg.setAttribute("stroke-opacity","0.6"); bg.setAttribute("stroke-width","0.6");
+    const tx = document.createElementNS(svgNS,"text");
+    tx.setAttribute("text-anchor","middle"); tx.setAttribute("y","3"); tx.setAttribute("font-family","JetBrains Mono, monospace"); tx.setAttribute("font-size","8"); tx.setAttribute("letter-spacing","0.18em");
+    tx.setAttribute("fill", ch.type==="pulse"?"#4AB8FF":"#C6E76B");
+    tx.textContent = ch.type === "pulse" ? "PULSE" : "FLUID";
+    tg.appendChild(bg); tg.appendChild(tx);
+    svg.appendChild(tg);
+  });
+
+  // Slots + callouts
+  slots.forEach((s, idx) => {
+    const g = document.createElementNS(svgNS,"g");
+    g.setAttribute("transform", `translate(${s.x} ${s.y})`);
+    const size = 72;
+    // brackets
+    const half = size/2 + 4, L = 9, w2 = 1.3;
+    const paths = [
+      `M ${-half} ${-half+L} L ${-half} ${-half} L ${-half+L} ${-half}`,
+      `M ${half-L} ${-half} L ${half} ${-half} L ${half} ${-half+L}`,
+      `M ${-half} ${half-L} L ${-half} ${half} L ${-half+L} ${half}`,
+      `M ${half-L} ${half} L ${half} ${half} L ${half} ${half-L}`,
+    ];
+    paths.forEach(d=>{
+      const p=document.createElementNS(svgNS,"path");
+      p.setAttribute("d",d); p.setAttribute("fill","none"); p.setAttribute("stroke", s.hue); p.setAttribute("stroke-width", w2); p.setAttribute("stroke-linecap","square");
+      g.appendChild(p);
+    });
+    // inner rect
+    const rect = document.createElementNS(svgNS,"rect");
+    rect.setAttribute("x", -size/2); rect.setAttribute("y", -size/2); rect.setAttribute("width", size); rect.setAttribute("height", size); rect.setAttribute("rx","5");
+    rect.setAttribute("fill", "rgba(10,14,18,0.85)"); rect.setAttribute("stroke", s.hue); rect.setAttribute("stroke-opacity","0.55"); rect.setAttribute("stroke-width","0.8");
+    g.appendChild(rect);
+    // organ symbol (simple source/gate/splitter/sink)
+    const symG = document.createElementNS(svgNS,"g");
+    const sc = 0.6;
+    if (s.organ === "VORDEX") {
+      for (let i=0;i<6;i++){
+        const rad = i * Math.PI/3;
+        const ln = document.createElementNS(svgNS,"line");
+        ln.setAttribute("x1", Math.cos(rad)*18*sc); ln.setAttribute("y1", Math.sin(rad)*18*sc);
+        ln.setAttribute("x2", Math.cos(rad)*26*sc); ln.setAttribute("y2", Math.sin(rad)*26*sc);
+        ln.setAttribute("stroke", s.hue); ln.setAttribute("stroke-width","1.2");
+        symG.appendChild(ln);
+      }
+      const c = document.createElementNS(svgNS,"circle"); c.setAttribute("r", 16*sc); c.setAttribute("fill","none"); c.setAttribute("stroke", s.hue); c.setAttribute("stroke-width","1.3"); symG.appendChild(c);
+      const c2 = document.createElementNS(svgNS,"circle"); c2.setAttribute("r", 6*sc); c2.setAttribute("fill", s.hue); symG.appendChild(c2);
+    } else if (s.organ === "VALDRIS") {
+      const r = document.createElementNS(svgNS,"rect"); r.setAttribute("x", -18*sc); r.setAttribute("y", -13*sc); r.setAttribute("width", 36*sc); r.setAttribute("height", 26*sc); r.setAttribute("rx","2"); r.setAttribute("fill","none"); r.setAttribute("stroke", s.hue); r.setAttribute("stroke-width","1.3"); symG.appendChild(r);
+      const l = document.createElementNS(svgNS,"line"); l.setAttribute("x1", -18*sc); l.setAttribute("y1","0"); l.setAttribute("x2", 18*sc); l.setAttribute("y2","0"); l.setAttribute("stroke", s.hue); l.setAttribute("stroke-width","1.2"); symG.appendChild(l);
+    } else if (s.organ === "THRENNIC") {
+      const c = document.createElementNS(svgNS,"circle"); c.setAttribute("r", 5*sc); c.setAttribute("fill", s.hue); symG.appendChild(c);
+      [[-18,-13],[-18,13],[18,0]].forEach(([x,y])=>{
+        const ln = document.createElementNS(svgNS,"line"); ln.setAttribute("x1","0"); ln.setAttribute("y1","0"); ln.setAttribute("x2", x*sc); ln.setAttribute("y2", y*sc); ln.setAttribute("stroke", s.hue); ln.setAttribute("stroke-width","1.2"); symG.appendChild(ln);
+        const cc = document.createElementNS(svgNS,"circle"); cc.setAttribute("cx", x*sc); cc.setAttribute("cy", y*sc); cc.setAttribute("r", 3*sc); cc.setAttribute("fill", s.hue); symG.appendChild(cc);
+      });
+    } else if (s.organ === "OSSURIC") {
+      const c = document.createElementNS(svgNS,"circle"); c.setAttribute("r", 18*sc); c.setAttribute("fill","none"); c.setAttribute("stroke", s.hue); c.setAttribute("stroke-width","1.3"); c.setAttribute("stroke-dasharray","3 2"); symG.appendChild(c);
+      const c2 = document.createElementNS(svgNS,"circle"); c2.setAttribute("r", 11*sc); c2.setAttribute("fill","none"); c2.setAttribute("stroke", s.hue); c2.setAttribute("stroke-width","1.2"); symG.appendChild(c2);
+      const c3 = document.createElementNS(svgNS,"circle"); c3.setAttribute("r", 4*sc); c3.setAttribute("fill", s.hue); symG.appendChild(c3);
+    }
+    g.appendChild(symG);
+
+    // Slot id under
+    const lbl = document.createElementNS(svgNS,"text");
+    lbl.setAttribute("y", size/2 + 18); lbl.setAttribute("text-anchor","middle"); lbl.setAttribute("font-family","JetBrains Mono, monospace"); lbl.setAttribute("font-size","8"); lbl.setAttribute("fill","#b89a6a"); lbl.setAttribute("letter-spacing","0.2em");
+    lbl.textContent = `[ ${s.id} · ${s.organ} ]`;
+    g.appendChild(lbl);
+    svg.appendChild(g);
+
+    // Callout — extends outward
+    const callX = s.x < cx ? s.x - 120 : s.x > cx ? s.x + 120 : s.x;
+    const callY = s.y < cy ? s.y - 80 : s.y + 100;
+    const line = document.createElementNS(svgNS,"path");
+    const d = `M ${s.x + (s.x < cx ? -40 : s.x > cx ? 40 : 0)} ${s.y + (s.y < cy ? -40 : s.y > cy ? 40 : 0)} L ${callX} ${callY}`;
+    line.setAttribute("d", d); line.setAttribute("stroke", "#b89a6a"); line.setAttribute("stroke-opacity","0.5"); line.setAttribute("stroke-width","0.7"); line.setAttribute("stroke-dasharray","2 3"); line.setAttribute("fill","none");
+    svg.appendChild(line);
+    const cg = document.createElementNS(svgNS,"g");
+    cg.setAttribute("transform", `translate(${callX} ${callY})`);
+    const tkick = document.createElementNS(svgNS,"text");
+    tkick.setAttribute("text-anchor", s.x < cx ? "end" : "start"); tkick.setAttribute("font-family","JetBrains Mono, monospace"); tkick.setAttribute("font-size","8"); tkick.setAttribute("letter-spacing","0.22em"); tkick.setAttribute("fill","#b89a6a");
+    tkick.textContent = `SLOT ${s.id} · ${s.role}`;
+    tkick.setAttribute("y","-6");
+    cg.appendChild(tkick);
+    const tname = document.createElementNS(svgNS,"text");
+    tname.setAttribute("text-anchor", s.x < cx ? "end" : "start"); tname.setAttribute("font-family","Spectral, serif"); tname.setAttribute("font-size","14"); tname.setAttribute("font-style","italic"); tname.setAttribute("fill","#e6ecec");
+    tname.textContent = s.organ.charAt(0) + s.organ.slice(1).toLowerCase();
+    cg.appendChild(tname);
+    svg.appendChild(cg);
+  });
+
+  // Outer annotations — figure tag
+  const fig = document.createElementNS(svgNS,"text");
+  fig.setAttribute("x", 32); fig.setAttribute("y", 28); fig.setAttribute("font-family","JetBrains Mono, monospace"); fig.setAttribute("font-size","9"); fig.setAttribute("letter-spacing","0.24em"); fig.setAttribute("fill","#b89a6a");
+  fig.textContent = "FIG. 04 · VORRKAI · VAR. IV · BILATERAL · 4 SLOT";
+  svg.appendChild(fig);
+  const scale = document.createElementNS(svgNS,"text");
+  scale.setAttribute("x", w-32); scale.setAttribute("y", h-16); scale.setAttribute("text-anchor","end"); scale.setAttribute("font-family","JetBrains Mono, monospace"); scale.setAttribute("font-size","9"); scale.setAttribute("letter-spacing","0.22em"); scale.setAttribute("fill","#b89a6a");
+  scale.textContent = "SCALE 1:1 · CHAMBER OBS-04";
+  svg.appendChild(scale);
+  // Scale bar
+  const sb = document.createElementNS(svgNS,"g");
+  sb.setAttribute("transform", `translate(32, ${h-28})`);
+  const sb1 = document.createElementNS(svgNS,"line"); sb1.setAttribute("x1","0"); sb1.setAttribute("y1","0"); sb1.setAttribute("x2","80"); sb1.setAttribute("y2","0"); sb1.setAttribute("stroke","#b89a6a"); sb1.setAttribute("stroke-width","0.8");
+  const sb2 = document.createElementNS(svgNS,"line"); sb2.setAttribute("x1","0"); sb2.setAttribute("y1","-3"); sb2.setAttribute("x2","0"); sb2.setAttribute("y2","3"); sb2.setAttribute("stroke","#b89a6a"); sb2.setAttribute("stroke-width","0.8");
+  const sb3 = document.createElementNS(svgNS,"line"); sb3.setAttribute("x1","80"); sb3.setAttribute("y1","-3"); sb3.setAttribute("x2","80"); sb3.setAttribute("y2","3"); sb3.setAttribute("stroke","#b89a6a"); sb3.setAttribute("stroke-width","0.8");
+  const sbt = document.createElementNS(svgNS,"text"); sbt.setAttribute("x","40"); sbt.setAttribute("y","-6"); sbt.setAttribute("text-anchor","middle"); sbt.setAttribute("font-family","JetBrains Mono, monospace"); sbt.setAttribute("font-size","8"); sbt.setAttribute("fill","#b89a6a"); sbt.setAttribute("letter-spacing","0.2em"); sbt.textContent = "20 mm";
+  sb.appendChild(sb1); sb.appendChild(sb2); sb.appendChild(sb3); sb.appendChild(sbt);
+  svg.appendChild(sb);
+
+  stage.appendChild(svg);
+})();
+
+// Animate channel flow in the DS canvas
+const kf = document.createElement("style");
+kf.textContent = `@keyframes dsFlow { to { stroke-dashoffset: -24; } }`;
+document.head.appendChild(kf);
+
+// ---- Organs grid ----
+(function(){
+  const grid = document.getElementById("organGrid");
+  const organs = [
+    { name: "Vordex Emitter",   short: "VDX", role: "SOURCE — bioelectric pacemaker. Emits without input.", hue: "oklch(0.78 0.17 50)",  sym: "source" },
+    { name: "Valdris Gate",     short: "VLD", role: "GATE — transmits only when two inputs are live.",       hue: "oklch(0.78 0.17 185)", sym: "gate" },
+    { name: "Thrennic Splitter",short: "THR", role: "SPLITTER — copies one PULSE into two outputs.",         hue: "oklch(0.78 0.17 315)", sym: "split" },
+    { name: "Ossuric Terminus", short: "OSS", role: "SINK — consumes a signal. Every line must end here.",   hue: "oklch(0.78 0.17 110)", sym: "sink" },
+  ];
+  organs.forEach(o => {
+    const cell = document.createElement("div"); cell.className = "organ-spec";
+    cell.innerHTML = `
+      <div class="organ-spec-thumb">
+        <svg viewBox="-40 -40 80 80" width="80" height="80">
+          <rect x="-32" y="-32" width="64" height="64" rx="5" fill="rgba(10,14,18,0.85)" stroke="${o.hue}" stroke-opacity="0.55" stroke-width="0.8"/>
+          ${o.sym === "source" ? `
+            ${[0,60,120,180,240,300].map(d=>{const r=d*Math.PI/180; return `<line x1="${Math.cos(r)*14}" y1="${Math.sin(r)*14}" x2="${Math.cos(r)*22}" y2="${Math.sin(r)*22}" stroke="${o.hue}" stroke-width="1.2"/>`;}).join("")}
+            <circle r="14" fill="none" stroke="${o.hue}" stroke-width="1.3"/>
+            <circle r="5" fill="${o.hue}"/>
+          ` : ""}
+          ${o.sym === "gate" ? `
+            <rect x="-16" y="-11" width="32" height="22" rx="2" fill="none" stroke="${o.hue}" stroke-width="1.3"/>
+            <line x1="-16" y1="0" x2="16" y2="0" stroke="${o.hue}" stroke-width="1.2"/>
+            <circle cx="-16" cy="0" r="3" fill="${o.hue}"/>
+            <circle cx="16" cy="0" r="3" fill="${o.hue}"/>
+          ` : ""}
+          ${o.sym === "split" ? `
+            <circle r="4" fill="${o.hue}"/>
+            <line x1="0" y1="0" x2="-16" y2="-12" stroke="${o.hue}" stroke-width="1.2"/>
+            <line x1="0" y1="0" x2="-16" y2="12" stroke="${o.hue}" stroke-width="1.2"/>
+            <line x1="0" y1="0" x2="16" y2="0" stroke="${o.hue}" stroke-width="1.2"/>
+            <circle cx="-16" cy="-12" r="3" fill="${o.hue}"/>
+            <circle cx="-16" cy="12" r="3" fill="${o.hue}"/>
+            <circle cx="16" cy="0" r="3" fill="${o.hue}"/>
+          ` : ""}
+          ${o.sym === "sink" ? `
+            <circle r="16" fill="none" stroke="${o.hue}" stroke-width="1.3" stroke-dasharray="3 2"/>
+            <circle r="10" fill="none" stroke="${o.hue}" stroke-width="1.2"/>
+            <circle r="4" fill="${o.hue}"/>
+          ` : ""}
+        </svg>
+      </div>
+      <div class="organ-spec-body">
+        <div class="organ-spec-name">${o.name}</div>
+        <div class="organ-spec-short">${o.short} · 80 × 80 PX</div>
+        <div class="organ-spec-role">${o.role}</div>
+        <div class="organ-spec-swatch"><span class="dot" style="background:${o.hue}"></span><span>${o.hue}</span></div>
+      </div>`;
+    grid.appendChild(cell);
+  });
+})();
+
+// ---- Slot state demos ----
+(function(){
+  const makeSlot = (id, mode) => {
+    const sz = 72, half = sz/2 + 4, L = 10;
+    const hue = mode === "filled" ? "oklch(0.78 0.17 50)" :
+                mode === "selected" ? "#FFD700" : "#556371";
+    const paths = [
+      `M ${-half} ${-half+L} L ${-half} ${-half} L ${-half+L} ${-half}`,
+      `M ${half-L} ${-half} L ${half} ${-half} L ${half} ${-half+L}`,
+      `M ${-half} ${half-L} L ${-half} ${half} L ${-half+L} ${half}`,
+      `M ${half-L} ${half} L ${half} ${half} L ${half} ${half-L}`,
+    ];
+    let inner = "";
+    if (mode === "empty") {
+      inner = `
+        <rect x="${-sz/2}" y="${-sz/2}" width="${sz}" height="${sz}" rx="5"
+          fill="rgba(10,14,18,0.6)" stroke="#556371" stroke-opacity="0.4" stroke-width="0.8" stroke-dasharray="2 3"/>
+        <text y="-2" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#556371" letter-spacing="0.18em">SLOT</text>
+        <text y="12" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#d9c9a3" opacity="0.7">S1</text>`;
+    } else if (mode === "selected") {
+      inner = `
+        <rect x="${-sz/2}" y="${-sz/2}" width="${sz}" height="${sz}" rx="5"
+          fill="rgba(10,14,18,0.6)" stroke="#FFD700" stroke-width="1.2" stroke-dasharray="4 3"/>
+        <rect x="${-sz/2-4}" y="${-sz/2-4}" width="${sz+8}" height="${sz+8}" rx="7"
+          fill="none" stroke="#FFD700" stroke-width="1.2" stroke-dasharray="5 4"/>
+        <text y="-2" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#FFD700" letter-spacing="0.18em">TARGET</text>
+        <text y="12" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#FFD700" opacity="0.9">S1</text>`;
+    } else {
+      inner = `
+        <rect x="${-sz/2}" y="${-sz/2}" width="${sz}" height="${sz}" rx="5"
+          fill="rgba(10,14,18,0.85)" stroke="oklch(0.78 0.17 50)" stroke-opacity="0.55" stroke-width="0.8"/>
+        ${[0,60,120,180,240,300].map(d=>{const r=d*Math.PI/180; return `<line x1="${Math.cos(r)*14}" y1="${Math.sin(r)*14}" x2="${Math.cos(r)*22}" y2="${Math.sin(r)*22}" stroke="oklch(0.78 0.17 50)" stroke-width="1.2"/>`;}).join("")}
+        <circle r="14" fill="none" stroke="oklch(0.78 0.17 50)" stroke-width="1.3"/>
+        <circle r="5" fill="oklch(0.78 0.17 50)"/>
+        <circle cx="28" cy="-28" r="2.5" fill="#00FF88"/>`;
+    }
+    const brackets = paths.map(d => `<path d="${d}" fill="none" stroke="${hue}" stroke-width="1.3" stroke-linecap="square"/>`).join("");
+    const label = mode === "empty" ? "EMPTY"
+                : mode === "selected" ? "SELECTED TARGET"
+                : "FILLED · VORDEX";
+    document.getElementById(id).innerHTML = `
+      <svg viewBox="-56 -56 112 112" width="110" height="110">${brackets}${inner}</svg>
+      <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:0.2em;color:var(--plate-brass);margin-top:8px;text-align:center;">${label}</div>`;
+  };
+  makeSlot("slotEmpty", "empty");
+  makeSlot("slotSelected", "selected");
+  makeSlot("slotFilled", "filled");
+})();
+</script>
+</body>
+</html>

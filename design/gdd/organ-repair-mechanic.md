@@ -34,6 +34,23 @@ Oyuncu bozuk slota dokunur — bir amaç doğar. Envanterden doğru organı seç
 
 **Geçerlilik kısıtı:** Herhangi bir organ herhangi bir slota yerleştirilebilir. Organ-slot uyumu kontrolü yapılmaz — bu Biology Rule Engine ve Failure Cascade System'in RUN anındaki görevi. Repair Mechanic yalnızca fiziksel yerleştirmeyi yönetir.
 
+### LOCKED (PRE-ATT) — Ossuric Terminus
+
+**Ossuric Terminus (Slot 4 / chartreuse organ)** başlangıçta envanterde kilitlidir. Oyuncu ilk RUN denemesini (ATT 01) tamamlamadan bu organı seçemez.
+
+**Kural:**
+- Puzzle yüklendiğinde `ossuric` organ kartı `LOCKED_PRE_ATT` durumunda açılır
+- Kart görünür ama etkileşilemez; üzerinde `LOCKED` etiketi gösterilir
+- ATT 01 tamamlanınca (RUN butonuna basılıp simulation cycle bitince, sonuçtan bağımsız) kilit kalkar
+- Kilit kalktıktan sonra kart normal `IDLE` durumuna girer; `LOCKED_PRE_ATT` durumuna geri dönülmez
+
+**Gerekçe:** Bu tasarım kararı, oyuncuyu önce mevcut 3 organla bir hipotez çalıştırmaya zorlar. Terminus rolünü anlamadan doğrudan doğru organı yerleştirmek mekanik bir kazara başarıyı mümkün kılar — LOCKED kural bunu engeller ve deductive flow'u korur.
+
+**Implementasyon notu:**
+- `inventory_tapped("ossuric")` geldiğinde `LOCKED_PRE_ATT` aktifse yutulur
+- `attempt_count` (Puzzle Data System'den okunur): `>= 1` ise kilit kaldırılır
+- Kilit durumu Run Simulation Controller'dan gelen `on_attempt_completed()` sinyaliyle güncellenir
+
 ### States and Transitions
 
 | Durum | Açıklama | Giriş | Çıkış |
@@ -41,6 +58,7 @@ Oyuncu bozuk slota dokunur — bir amaç doğar. Envanterden doğru organı seç
 | `IDLE` | Hiç slot seçili değil | Başlangıç / seçim iptal / organ yerleşti | `slot_tapped(index)` → `SLOT_SELECTED` |
 | `SLOT_SELECTED` | Bir slot seçili, organ bekleniyor | `slot_tapped(index)` yeni slot | `inventory_tapped(id)` → yerleştirme → `IDLE`; `slot_tapped(same)` → iptal → `IDLE`; `slot_tapped(other)` → slot değişimi (SLOT_SELECTED kalır) |
 | `LOCKED` | RUN animasyonu sırasında etkileşim yok | Run Controller `lock()` | `unlock()` → önceki duruma dön |
+| `LOCKED_PRE_ATT` | Ossuric Terminus kart kilidi — yalnızca bu organ için | Puzzle yüklenince (ossuric için) | `on_attempt_completed()` → `IDLE`'a geçer; geri dönüşü yoktur |
 
 ### Interactions with Other Systems
 
@@ -89,6 +107,9 @@ on_inventory_tapped(organ_id):
 | Slot seçiliyken RUN'a basılır | `lock()` gelir; seçim görsel olarak korunur ama etkileşim kapanır; RUN sonrası seçim sıfırlanır | RUN animasyonu sırasında değişiklik yapılmamalı |
 | Aynı organı aynı slota yerleştirme | `set_organ()` çağrılır; Puzzle Data System aynı değeri yazar — görsel değişmez | Geçerli işlem; gereksiz ama zararsız |
 | `LOCKED` durumda tap | Yutulur; Touch Input Handler zaten `LOCKED` sinyal göndermez | Çift güvenlik katmanı |
+| `LOCKED_PRE_ATT` — ossuric tapped | `inventory_tapped("ossuric")` yutulur; kart görsel olarak kilitli gösterilir | Attempt 01 öncesi erişim engeli |
+| Attempt 01 tamamlandı, kilit kalktı | `on_attempt_completed()` → `LOCKED_PRE_ATT` → `IDLE`; kart etkileşime açılır | Tek yönlü geçiş; bir kez açıldı mı kapanmaz |
+| Oyuncu puzzle'ı yeniden yüklerse | Ossuric yeniden `LOCKED_PRE_ATT`'e mi girer? → **Hayır.** `attempt_count >= 1` ise başlangıçta da açık gelir | Puzzle Data System'deki attempt_count kalıcıdır |
 | Organ yerleştirme sırasında `set_organ()` başarısız olursa | Seçim sıfırlanmaz; hata loglanır; oyuncu tekrar deneyebilir | Puzzle Data System reddetti (bilinmeyen organ id vb.) |
 
 ## Dependencies
@@ -98,7 +119,8 @@ on_inventory_tapped(organ_id):
 | Touch Input Handler | Handler → Mechanic | Hard | `slot_tapped(int)`, `inventory_tapped(String)` sinyalleri |
 | Puzzle Data System | Mechanic → PDS | Hard | `set_organ(slot_index: int, organ_id: String)` |
 | Specimen Viewer | Mechanic → Viewer | Hard | `set_slot_selected(index: int, selected: bool)` |
-| Run Simulation Controller | Controller → Mechanic | Hard | `lock()` / `unlock()` |
+| Run Simulation Controller | Controller → Mechanic | Hard | `lock()` / `unlock()` / `on_attempt_completed()` |
+| Puzzle Data System | Mechanic ← PDS (read) | Hard | `attempt_count: int` — ossuric kilidini açmak için okunur |
 
 ## Tuning Knobs
 
@@ -133,9 +155,28 @@ Organ Repair Mechanic doğrudan UI üretmez. Envanter alanının görsel tasarı
 - [ ] Organ yerleştirme → `organ_placed(slot_index, organ_id)` sinyali emit edilir
 - [ ] RUN sonrası `unlock()` → mechanic normal çalışmaya döner
 - [ ] GUT testi: `TestOrganRepairMechanic.gd` state machine geçişlerini doğrular
+- [ ] Puzzle yüklendiğinde ossuric kart `LOCKED_PRE_ATT` durumunda başlar — `inventory_tapped("ossuric")` yutulur
+- [ ] ATT 01 tamamlandıktan sonra ossuric kart aktif olur — `inventory_tapped("ossuric")` işlenir
+- [ ] `attempt_count >= 1` ile yüklenen puzzle'da ossuric başlangıçta açıktır
+- [ ] `LOCKED_PRE_ATT` durumdan `IDLE`'a geçiş tek yönlüdür; geri dönüşü yoktur
+
+## Agency Design Note — Interaction Model Difference
+
+Tasarım ajansının prototype'ı (Specimen Prototype.html) **ters etkileşim sırasını** kullanır:
+1. Önce envanterdeki organ kartına tıklanır (organı seçer)
+2. Ardından slota tıklanır (organı yerleştirir)
+
+Bizim GDD'mizdeki model ise:
+1. Önce slota tıklanır (hedefi seçer)
+2. Ardından envanterden organ seçilir (yerleştirir)
+
+**Mevcut karar:** Slot-first model GDD canonical'dır (bu doküman). Ajans prototype'ındaki inventory-first model, oyuncuya "ne yerleştireceğini" değil "nereye yerleştireceğini" soran yönelim farkından kaynaklanmaktadır. Her iki model UX açısından geçerlidir; V1 playtesting'de her ikisi de test edilebilir.
+
+**Açık ADR:** Eğer playtesting inventory-first'ın daha sezgisel hissettirdiğini gösterirse, `/architecture-decision` ile resmi karar dökümante edilmelidir.
 
 ## Open Questions
 
 | Soru | Sahip | Hedef |
 |------|-------|-------|
 | V1'de birden fazla yanlış organ olduğunda seçim akışı değişecek mi? | Designer | V1 planlamasında — mevcut iki adımlı model yeterli, slot sayısı artar |
+| Slot-first mi, inventory-first mi? (Ajans prototype'ından fark) | Designer + Playtesting | V1 playtesting sonrası ADR ile karar verilecek |
