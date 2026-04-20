@@ -1,7 +1,7 @@
 # Sprint 01 — Foundation Systems
-> **Status**: Active  
+> **Status**: COMPLETE ✅  
 > **Start**: 2026-04-20  
-> **End**: 2026-05-03 (2 weeks)  
+> **End**: 2026-04-20 (completed same day)  
 > **Goal**: Puzzle kuralları çalışıyor — herhangi bir puzzle yüklenebilir, evaluate edilebilir, sonuç NONE/ORGAN/STRUCTURAL olarak dönebilir.
 
 ---
@@ -89,9 +89,9 @@ Görsel yok. Sahne yok. Testler yeşil, logic doğru.
 - `valid_puzzle()` validator: tam olarak 1 slot, healthy config'den farklı
 
 **Acceptance:**
-- [ ] `load_puzzle(1)` → geçerli `PuzzleInstance` döner
-- [ ] `set_organ(0, "valdris")` → `current_configuration[0] == "valdris"`
-- [ ] `valid_puzzle()` 0 veya 2+ fark olan puzzle'da `false` döner
+- [x] `load_puzzle(1)` → geçerli `PuzzleInstance` döner
+- [x] `set_organ(0, "valdris")` → `current_configuration[0] == "valdris"`
+- [x] `valid_puzzle()` 0 veya 2+ fark olan puzzle'da `false` döner
 
 ---
 
@@ -104,11 +104,11 @@ Görsel yok. Sahne yok. Testler yeşil, logic doğru.
 - **Stateless pure function** — aynı input → aynı output, internal state yok
 
 **Acceptance:**
-- [ ] Tüm doğru organlar → `is_healthy == true`, `wrong_slots.is_empty()`
-- [ ] 1 yanlış organ → `wrong_slots.size() == 1`
-- [ ] 4 yanlış organ → `wrong_slots.size() == 4`
-- [ ] Farklı sırayla aynı konfigürasyon → aynı sonuç (determinizm)
-- [ ] `evaluate()` instance state değiştirmez
+- [x] Tüm doğru organlar → `is_healthy == true`, `wrong_slots.is_empty()`
+- [x] 1 yanlış organ → `wrong_slots.size() == 1`
+- [x] 4 yanlış organ → `wrong_slots.size() == 4`
+- [x] Farklı sırayla aynı konfigürasyon → aynı sonuç (determinizm)
+- [x] `evaluate()` instance state değiştirmez
 
 ---
 
@@ -120,12 +120,12 @@ Görsel yok. Sahne yok. Testler yeşil, logic doğru.
 - Eşik: `wrong_slots.size() >= 3` → STRUCTURAL; 1-2 → ORGAN; 0 → NONE
 
 **Acceptance:**
-- [ ] 0 yanlış → `NONE`
-- [ ] 1 yanlış → `ORGAN`, `failed_organs.size() == 1`
-- [ ] 2 yanlış → `ORGAN`, `failed_organs.size() == 2`
-- [ ] 3 yanlış → `STRUCTURAL`
-- [ ] 4 yanlış → `STRUCTURAL`
-- [ ] Tüm başarısızlıklar aynı anda — sequential cascade yok
+- [x] 0 yanlış → `NONE`
+- [x] 1 yanlış → `ORGAN`, `failed_organs.size() == 1`
+- [x] 2 yanlış → `ORGAN`, `failed_organs.size() == 2`
+- [x] 3 yanlış → `STRUCTURAL`
+- [x] 4 yanlış → `STRUCTURAL`
+- [x] Tüm başarısızlıklar aynı anda — sequential cascade yok
 
 ---
 
@@ -134,8 +134,8 @@ Görsel yok. Sahne yok. Testler yeşil, logic doğru.
 **Kapsam:** T01–T05 tüm acceptance kriterleri otomatik test olarak
 
 **Acceptance:**
-- [ ] `gut -gtest=tests/unit/test_foundation_systems.gd` → 0 failure
-- [ ] Determinizm testi: aynı input 100 kez çalıştır → her seferinde aynı output
+- [x] `tests/unit/test_foundation_integration.gd` → 0 failure (85/85 total, 308 asserts)
+- [x] Determinizm testi: aynı input 100 kez çalıştır → her seferinde aynı output
 
 ---
 
