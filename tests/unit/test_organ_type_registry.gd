@@ -144,7 +144,7 @@ func test_valid_registry_fails_on_empty_creature_type_ids() -> void:
 
 func test_index_rebuilt_after_organs_replaced() -> void:
 	var registry := _make_full_registry()
-	var _ := registry.get_organ("vordex")  # triggers index build
+	var _first := registry.get_organ("vordex")  # triggers index build
 
 	# Yeni bir registry ile organs array'ini değiştiriyoruz
 	var new_registry := OrganTypeRegistry.new()

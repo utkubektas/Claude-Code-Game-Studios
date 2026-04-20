@@ -22,20 +22,20 @@ func get_all_organs() -> Array[OrganTypeResource]:
 
 
 ## Registry veri bütünlüğünü doğrular.
-## Hata durumunda push_error çağırır ve false döner.
+## Hata durumunda push_warning çağırır ve false döner.
 ## Oyun başlangıcında (Autoload._ready veya test setup) çağrılmalı.
 func valid_registry() -> bool:
 	var seen_ids: Dictionary = {}
 
 	for organ: OrganTypeResource in organs:
 		if not organ.is_valid():
-			push_error(
+			push_warning(
 				"OrganTypeRegistry: '%s' geçersiz — zorunlu alan boş." % organ.organ_id
 			)
 			return false
 
 		if seen_ids.has(organ.organ_id):
-			push_error(
+			push_warning(
 				"OrganTypeRegistry: '%s' ID'si birden fazla organda kullanılıyor." % organ.organ_id
 			)
 			return false
