@@ -1,5 +1,5 @@
 # Sprint 02 — Interaction Layer
-> **Status**: Active
+> **Status**: Complete
 > **Start**: 2026-04-20
 > **End**: 2026-05-03 (2 weeks)
 > **Goal**: İlk tıklanabilir prototype: oyuncu bir slota dokunur, envanterden organ seçer, RUN'a basar — sistem evaluate eder ve sonuç üretir. Görsel animasyon yok (Sprint 03), ama tüm mantık ve sinyal akışı çalışıyor.
@@ -75,16 +75,16 @@ Sprint 02'nin üç ana sistemi (TouchInputHandler, OrganRepairMechanic, RunSimul
 **Test yaklaşımı:** GUT içinde `_input()` doğrudan çağrılarak `InputEventScreenTouch` simüle edilir.
 
 **Acceptance:**
-- [ ] `register_area()` → alan kayıtlı; aynı `id` tekrar kaydedilirse üzerine yazar
-- [ ] Kayıtlı alan 48×48px altındaysa `push_warning()` ve alan MIN_TOUCH_AREA'ya büyütülür
-- [ ] SLOT alanına tap (≤200ms, ≤10px) → `slot_tapped(correct_index)`
-- [ ] INVENTORY alanına tap → `inventory_tapped(correct_organ_id)`
-- [ ] RUN_BUTTON alanına tap → `run_tapped()`
-- [ ] `lock_input()` → LOCKED; tap'ler yutulur, sinyal gönderilmez
-- [ ] `unlock_input()` → IDLE; tap'ler normal işlenir
-- [ ] 200ms üzeri basma → tap tanınmaz
-- [ ] 10px üzeri hareket → tap tanınmaz
-- [ ] Alan dışı tap → sinyal gönderilmez
+- [x] `register_area()` → alan kayıtlı; aynı `id` tekrar kaydedilirse üzerine yazar
+- [x] Kayıtlı alan 48×48px altındaysa `push_warning()` ve alan MIN_TOUCH_AREA'ya büyütülür
+- [x] SLOT alanına tap (≤200ms, ≤10px) → `slot_tapped(correct_index)`
+- [x] INVENTORY alanına tap → `inventory_tapped(correct_organ_id)`
+- [x] RUN_BUTTON alanına tap → `run_tapped()`
+- [x] `lock_input()` → LOCKED; tap'ler yutulur, sinyal gönderilmez
+- [x] `unlock_input()` → IDLE; tap'ler normal işlenir
+- [x] 200ms üzeri basma → tap tanınmaz
+- [x] 10px üzeri hareket → tap tanınmaz
+- [x] Alan dışı tap → sinyal gönderilmez
 
 ---
 
@@ -104,16 +104,16 @@ Sprint 02'nin üç ana sistemi (TouchInputHandler, OrganRepairMechanic, RunSimul
 - `on_attempt_completed()` → kilit kalkar, tek yönlü
 
 **Acceptance:**
-- [ ] `slot_tapped(0)` → `slot_selected(0)` emit edilir
-- [ ] Aynı slota tekrar tap → `slot_deselected(0)` emit edilir
-- [ ] Farklı slota tap (seçiliyken) → eski slot deselect, yeni slot select
-- [ ] `inventory_tapped("vordex")` (slot seçiliyken) → `PuzzleInstance.set_organ()` çağrılır, `organ_placed` emit edilir, seçim sıfırlanır
-- [ ] `inventory_tapped` (slot seçili değilken) → yutulur
-- [ ] `lock()` → LOCKED; her tap yutulur
-- [ ] `unlock()` → önceki duruma döner
-- [ ] Puzzle yüklenince `inventory_tapped("ossuric")` → yutulur (LOCKED_PRE_ATT)
-- [ ] `on_attempt_completed()` → ossuric kilidi kalkar; sonraki `inventory_tapped("ossuric")` işlenir
-- [ ] `attempt_count >= 1` ile kurulan mechanic → ossuric başlangıçta açık
+- [x] `slot_tapped(0)` → `slot_selected(0)` emit edilir
+- [x] Aynı slota tekrar tap → `slot_deselected(0)` emit edilir
+- [x] Farklı slota tap (seçiliyken) → eski slot deselect, yeni slot select
+- [x] `inventory_tapped("vordex")` (slot seçiliyken) → `PuzzleInstance.set_organ()` çağrılır, `organ_placed` emit edilir, seçim sıfırlanır
+- [x] `inventory_tapped` (slot seçili değilken) → yutulur
+- [x] `lock()` → LOCKED; her tap yutulur
+- [x] `unlock()` → önceki duruma döner
+- [x] Puzzle yüklenince `inventory_tapped("ossuric")` → yutulur (LOCKED_PRE_ATT)
+- [x] `on_attempt_completed()` → ossuric kilidi kalkar; sonraki `inventory_tapped("ossuric")` işlenir
+- [x] `attempt_count >= 1` ile kurulan mechanic → ossuric başlangıçta açık
 
 ---
 
@@ -132,14 +132,14 @@ Sprint 02'nin üç ana sistemi (TouchInputHandler, OrganRepairMechanic, RunSimul
 **Test VFX stub:** Testlerde `_TestVFXStub` inner class, `vfx_play_requested` alınca anında `vfx_complete` emit eder.
 
 **Acceptance:**
-- [ ] `run_tapped()` → `PuzzleInstance.increment_attempts()`, `BiologyRuleEngine.evaluate()`, `FailureCascadeSystem.resolve()` sırayla çağrılır
-- [ ] `vfx_play_requested(result)` emit edilir; tür = cascade result türü
-- [ ] `vfx_complete` alınınca IDLE'a döner, `unlock()` emit edilir
-- [ ] Başarılı RUN → `PuzzleInstance.check_solved()` true döner, `puzzle_solved(next_index)` emit edilir
-- [ ] `run_tapped()` ANIMATING durumunda → yutulur
-- [ ] `attempt_completed()` signal'i emit edilir → OrganRepairMechanic ossuric kilidini açabilir
-- [ ] VFX 5 saniye içinde `vfx_complete` göndermezse → zorla `IDLE`'a döner
-- [ ] Aynı konfigürasyonla iki RUN → aynı `cascade_result.failure_type` (determinizm)
+- [x] `run_tapped()` → `PuzzleInstance.increment_attempts()`, `BiologyRuleEngine.evaluate()`, `FailureCascadeSystem.resolve()` sırayla çağrılır
+- [x] `vfx_play_requested(result)` emit edilir; tür = cascade result türü
+- [x] `vfx_complete` alınınca IDLE'a döner, `unlock()` emit edilir
+- [x] Başarılı RUN → `PuzzleInstance.check_solved()` true döner, `puzzle_solved(next_index)` emit edilir
+- [x] `run_tapped()` ANIMATING durumunda → yutulur
+- [x] `attempt_completed()` signal'i emit edilir → OrganRepairMechanic ossuric kilidini açabilir
+- [x] VFX 5 saniye içinde `vfx_complete` göndermezse → zorla `IDLE`'a döner
+- [x] Aynı konfigürasyonla iki RUN → aynı `cascade_result.failure_type` (determinizm)
 
 ---
 
@@ -150,10 +150,10 @@ Sprint 02'nin üç ana sistemi (TouchInputHandler, OrganRepairMechanic, RunSimul
 - `increment_attempts() -> void` — `active_instance.increment_attempts()` delegasyonu; null guard
 
 **Acceptance:**
-- [ ] `mark_solved()` → `active_instance.is_solved == true`, `puzzle_solved` signal emit edilir
-- [ ] `mark_solved()` null active_instance'ta → `push_warning()`, crash yok
-- [ ] `increment_attempts()` → `active_instance.attempt_count` artar
-- [ ] Mevcut 85 test hâlâ geçiyor
+- [x] `mark_solved()` → `active_instance.is_solved == true`, `puzzle_solved` signal emit edilir
+- [x] `mark_solved()` null active_instance'ta → `push_warning()`, crash yok
+- [x] `increment_attempts()` → `active_instance.attempt_count` artar
+- [x] Mevcut 85 test hâlâ geçiyor
 
 ---
 
@@ -162,10 +162,10 @@ Sprint 02'nin üç ana sistemi (TouchInputHandler, OrganRepairMechanic, RunSimul
 **Kapsam:** T07–T10 tam signal akışı; determinizm
 
 **Acceptance:**
-- [ ] tap → seçim → yerleştirme → RUN tam zinciri test ediliyor
-- [ ] LOCKED_PRE_ATT → attempt → kilit açılma test ediliyor
-- [ ] RUN sırasında ikinci `run_tapped()` → yutulur test ediliyor
-- [ ] Tüm testler geçiyor (`gut -gdir=res://tests/unit` → 0 failure)
+- [x] tap → seçim → yerleştirme → RUN tam zinciri test ediliyor
+- [x] LOCKED_PRE_ATT → attempt → kilit açılma test ediliyor
+- [x] RUN sırasında ikinci `run_tapped()` → yutulur test ediliyor
+- [x] Tüm testler geçiyor (`gut -gdir=res://tests/unit` → 0 failure)
 
 ---
 
