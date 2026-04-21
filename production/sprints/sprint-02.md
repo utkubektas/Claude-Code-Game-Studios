@@ -199,6 +199,18 @@ tests/
 
 ---
 
+## Review Model Notu (Retrospektif)
+
+Sprint 02'de tüm code review'lar `lead-programmer` tarafından yapıldı (7 çağrı, ~182K token).
+Sprint 03'ten itibaren **üç katmanlı review modeli** uygulanacak:
+- Tier 1 (GDScript kalitesi): `godot-gdscript-specialist`
+- Tier 2 (gameplay doğruluğu): `gameplay-programmer`
+- Tier 3 (mimari): `lead-programmer` — sprint başına tek sefer
+
+Detay: `.claude/docs/review-delegation.md`
+
+---
+
 ## Sprint 03 Preview (Bilgi için)
 
 Sprint 03 — Visual Layer: Specimen Viewer (slot görseli, selection highlight) + Puzzle HUD (envanter UI, RUN butonu) + Run Sequence VFX (animasyon). Sprint 02 signal'lerine bağlanır — logic değişmez.
