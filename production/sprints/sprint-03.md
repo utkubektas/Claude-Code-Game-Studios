@@ -1,7 +1,9 @@
 # Sprint 03 — Visual Layer
-> **Status**: Active
+> **Status**: Complete
 > **Start**: 2026-04-21
 > **End**: 2026-05-04 (2 weeks)
+> **Closed**: 2026-05-05
+> **Gate**: ONAYLANDI — lead-programmer gate-check geçti. Tek açık: `puzzle_solved→ScreenNavigation` wire → T17 (Sprint 04)
 > **Goal**: İlk görsel prototype: oyuncu creature'ı ekranda görür, organ slotlarına dokunur, RUN'a basar — animasyon oynar ve sonuç görsel olarak iletilir. Sprint 02 logic layer üzerine görsel katman eklenir; mantık değişmez.
 
 ---
