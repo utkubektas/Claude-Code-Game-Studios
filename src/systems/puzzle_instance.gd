@@ -65,25 +65,27 @@ func setup(
 # ---------------------------------------------------------------------------
 
 ## Belirtilen slota organ yerleştirir.
-## Bilinmeyen organ_type_id → reddedilir, current_configuration değişmez.
-## Başarılıysa organ_placed sinyali yayınlanır.
-func set_organ(slot_index: int, organ_type_id: String) -> void:
+## Bilinmeyen organ_type_id veya geçersiz slot_index → reddedilir, current_configuration değişmez.
+## Başarılıysa organ_placed sinyali yayınlanır ve true döner.
+## Başarısızsa uyarı loglanır ve false döner — seçim dışarıda korunabilir.
+func set_organ(slot_index: int, organ_type_id: String) -> bool:
 	if _organ_registry.get_organ(organ_type_id) == null:
 		push_warning(
 			"PuzzleInstance '%s': bilinmeyen organ_type_id '%s' — set_organ reddedildi."
 			% [puzzle_resource.display_title, organ_type_id]
 		)
-		return
+		return false
 
 	if slot_index < 0 or slot_index >= current_configuration.size():
 		push_warning(
 			"PuzzleInstance '%s': slot_index %d geçersiz (0..%d aralığında olmalı)."
 			% [puzzle_resource.display_title, slot_index, current_configuration.size() - 1]
 		)
-		return
+		return false
 
 	current_configuration[slot_index] = organ_type_id
 	organ_placed.emit(slot_index, organ_type_id)
+	return true
 
 
 ## Güncel konfigürasyonu döner. Her çağrıda tutarlı sonuç üretir.
