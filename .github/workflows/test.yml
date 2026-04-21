@@ -31,18 +31,19 @@ jobs:
           curl -L -o godot.zip "https://github.com/godotengine/godot-builds/releases/download/4.6.1-stable/Godot_v4.6.1-stable_linux.x86_64.zip"
           unzip -q godot.zip
           rm godot.zip
-          chmod +x Godot_v4.6.1-stable_linux.x86_64/Godot_v4.6.1-stable_linux.x86_64
+          # Zip contains the binary directly at root, not inside a subdirectory
+          chmod +x Godot_v4.6.1-stable_linux.x86_64
 
       - name: Import project
         run: |
-          ~/godot-bin/Godot_v4.6.1-stable_linux.x86_64/Godot_v4.6.1-stable_linux.x86_64 \
+          ~/godot-bin/Godot_v4.6.1-stable_linux.x86_64 \
             --headless \
             --import \
             -q
 
       - name: Run GUT tests
         run: |
-          ~/godot-bin/Godot_v4.6.1-stable_linux.x86_64/Godot_v4.6.1-stable_linux.x86_64 \
+          ~/godot-bin/Godot_v4.6.1-stable_linux.x86_64 \
             --headless \
             -s res://addons/gut/gut_cmdln.gd \
             -- -gdir=res://tests/unit -gprefix=test_ -gsuffix=.gd -glog=0
