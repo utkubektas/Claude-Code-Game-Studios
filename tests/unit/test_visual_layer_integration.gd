@@ -67,8 +67,12 @@ func _make_puzzle_resource() -> PuzzleResource:
 
 
 func _make_puzzle_instance(p_start: Array[String] = []) -> PuzzleInstance:
-	var start: Array[String] = p_start if not p_start.is_empty() \
-		else ["ossuric", "valdris", "thrennic", "ossuric"]
+	var start: Array[String]
+	if p_start.is_empty():
+		var default_start: Array[String] = ["ossuric", "valdris", "thrennic", "ossuric"]
+		start = default_start
+	else:
+		start = p_start
 	var pr := _make_puzzle_resource()
 	pr.starting_configuration = start
 	var healthy: Array[String] = ["vordex", "valdris", "thrennic", "ossuric"]

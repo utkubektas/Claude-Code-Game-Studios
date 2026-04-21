@@ -195,7 +195,7 @@ func test_interaction_run_tapped_produces_cascade_result() -> void:
 	assert_signal_emitted(controller, "vfx_play_requested")
 	var params: Array = get_signal_parameters(controller, "vfx_play_requested")
 	var result: FailureCascadeResult = params[0]
-	assert_neq(result.failure_type, FailureCascadeResult.FailureType.NONE)
+	assert_ne(result.failure_type, FailureCascadeResult.FailureType.NONE)
 
 
 func test_interaction_run_increments_attempt_and_emits_unlocked() -> void:

@@ -93,8 +93,8 @@ func load_creature(p_healthy_config: Array[String]) -> void:
 	_healthy_config = p_healthy_config
 	_build_slot_states()
 	_register_touch_areas()
-	refresh_slots()
 	_state = State.ACTIVE
+	refresh_slots()
 	queue_redraw()
 
 
