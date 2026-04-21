@@ -52,3 +52,7 @@ See `docs/COLLABORATIVE-DESIGN-PRINCIPLE.md` for full protocol and examples.
 ## Context Management
 
 @.claude/docs/context-management.md
+
+## Token Budget
+
+@.claude/docs/token-budget.md
